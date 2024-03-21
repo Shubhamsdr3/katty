@@ -2,6 +2,7 @@ package com.pandey.shubham.katty.detail.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import com.pandey.shubham.katty.base.BaseFragment
@@ -28,6 +29,13 @@ class FeedItemDetailFragment : BaseFragment<FragmentFeedItemDetailBinding, Callb
 
     override fun populateViews() {
         attachObserver()
+        attachListener()
+    }
+
+    private fun attachListener() {
+        binding.feedDetailToolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
     }
 
     private fun attachObserver() {

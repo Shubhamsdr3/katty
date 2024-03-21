@@ -21,6 +21,10 @@ class HomeFeedFragment : BaseFragment<FragmentHomeFeedBinding, HomeFeedFragmentC
 
     private val viewModel: HomeFeedViewModel by viewModels()
 
+    private val feedAdapter: HomeFeedAdapter by lazy {
+        HomeFeedAdapter { openDetailFragment(it) }
+    }
+
     override fun viewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentHomeFeedBinding {
         return FragmentHomeFeedBinding.inflate(inflater, container, false)
     }
@@ -32,6 +36,9 @@ class HomeFeedFragment : BaseFragment<FragmentHomeFeedBinding, HomeFeedFragmentC
     private fun attachObserver() {
         viewModel.fetchFeedData()
         viewModel.homeFeedUiState.observe(viewLifecycleOwner) { onHomeUiStateChange(it) }
+        viewModel.fetchFeedDataPaginated().observe(viewLifecycleOwner) {
+            feedAdapter.submitData(lifecycle, it)
+        }
     }
 
     private fun onHomeUiStateChange(state: HomeFeedUiState?) {
@@ -53,7 +60,9 @@ class HomeFeedFragment : BaseFragment<FragmentHomeFeedBinding, HomeFeedFragmentC
         }
         with(binding.rvFeed) {
             layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
-            adapter = HomeFeedAdapter(feedResponse) { openDetailFragment(it) }
+            adapter = feedAdapter.run {
+                withLoadStateFooter(FeedLoadingAdapter { retry() })
+            }
             addItemDecoration(SpaceItemDecoration(16, RecyclerView.VERTICAL))
         }
     }
@@ -74,13 +83,11 @@ class HomeFeedFragment : BaseFragment<FragmentHomeFeedBinding, HomeFeedFragmentC
     }
 
     private fun hideLoader() {
-        binding.showLoader = false
-        binding.executePendingBindings()
+        binding.feedProgress.gone()
     }
 
     private fun showLoader() {
-        binding.showLoader = true
-        binding.executePendingBindings()
+        binding.feedProgress.visible()
     }
 
     companion object {

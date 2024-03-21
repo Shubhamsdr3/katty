@@ -12,11 +12,12 @@
             android:id="@+id/iv_feed"
             android:layout_width="match_parent"
             android:layout_height="200dp"
+            android:adjustViewBounds="true"
             android:scaleType="fitXY"
-            app:srcCompat="@drawable/ic_launcher_background"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_launcher_background" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_favourite"
@@ -24,9 +25,9 @@
             android:layout_height="@dimen/dimen32dp"
             android:layout_marginEnd="@dimen/dimen16dp"
             android:layout_marginBottom="@dimen/dimen16dp"
-            app:srcCompat="@drawable/icon_heart_filled_red_24"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/icon_heart_outlined_24" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

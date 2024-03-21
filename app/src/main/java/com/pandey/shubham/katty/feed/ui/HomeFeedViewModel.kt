@@ -3,7 +3,9 @@ package com.pandey.shubham.katty.feed.ui
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
 import com.pandey.shubham.katty.feed.data.FeedRepository
 import com.pandey.shubham.katty.network.HomeFeedUiState
 import com.pandey.shubham.katty.network.NetworkState
@@ -22,8 +24,10 @@ class HomeFeedViewModel @Inject constructor(private val repository: FeedReposito
     private val _homeFeedUiMutableState: MutableLiveData<HomeFeedUiState> = MutableLiveData()
     val homeFeedUiState: LiveData<HomeFeedUiState> = _homeFeedUiMutableState
 
+    fun fetchFeedDataPaginated() = repository.getCateImagesPaginated().cachedIn(viewModelScope).asLiveData()
+
     fun fetchFeedData() {
-        repository.getCatImages().onEach { state ->
+        repository.getCatImages(10, 1).onEach { state ->
             when(state) {
                 is NetworkState.Loading -> _homeFeedUiMutableState.value = HomeFeedUiState.ShowLoader
                 is NetworkState.Success -> _homeFeedUiMutableState.value = HomeFeedUiState.ShowFeedData(state.data)

@@ -1,5 +1,8 @@
 package com.pandey.shubham.katty.feed.data
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import com.pandey.shubham.katty.feed.paging.FeedDataSource
 import com.pandey.shubham.katty.network.FeedApiService
 import com.pandey.shubham.katty.network.NetworkState
 import kotlinx.coroutines.flow.flow
@@ -12,10 +15,18 @@ import javax.inject.Inject
 
 class FeedRepository @Inject constructor(private val apiService: FeedApiService) {
 
-    fun getCatImages() = flow {
+    fun getCateImagesPaginated() = Pager(
+        config = PagingConfig(
+            pageSize = 10,
+            maxSize = 100, // TODO why ?
+        ),
+        pagingSourceFactory = { FeedDataSource(apiService) },
+    ).flow
+
+    fun getCatImages(offset: Int, pageNumber: Int) = flow {
         emit(NetworkState.Loading)
         try {
-            val response = apiService.getCatImages()
+            val response = apiService.getCatImages(offset, pageNumber, "DESC")
             if (response.isSuccessful) {
                 emit(NetworkState.Success(response.body()))
             } else {

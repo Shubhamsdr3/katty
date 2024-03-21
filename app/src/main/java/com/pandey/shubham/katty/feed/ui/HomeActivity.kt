@@ -9,6 +9,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.commit
 import com.pandey.shubham.katty.R
 import com.pandey.shubham.katty.base.BaseActivity
@@ -33,6 +34,6 @@ class HomeActivity : BaseActivity<ActivityMainBinding>(), HomeFeedFragmentCallba
     }
 
     override fun openDetailFragment(catId: String) {
-        openFragment(R.id.feed_container, FeedItemDetailFragment.newInstance(catId))
+        openFragment(R.id.feed_container, FeedItemDetailFragment.newInstance(catId), addToBackStack = true)
     }
 }

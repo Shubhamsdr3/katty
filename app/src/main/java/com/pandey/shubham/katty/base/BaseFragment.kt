@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.pandey.shubham.katty.utils.Callback
@@ -41,6 +42,10 @@ abstract class BaseFragment<VB: ViewBinding, T> : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         populateViews()
+    }
+
+    protected fun onBackPressed() {
+        requireActivity().onBackPressedDispatcher.onBackPressed()
     }
 
     protected abstract fun viewBinding(inflater: LayoutInflater, container: ViewGroup?): VB
