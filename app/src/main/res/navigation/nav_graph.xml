@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.pandey.shubham.katty.feed.ui.HomeFeedFragment"
+        android:name="com.pandey.shubham.katty.feature.feed.ui.HomeFeedFragment"
         android:label="HomeFeedFragment" >
 
         <action

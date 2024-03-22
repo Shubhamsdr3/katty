@@ -51,6 +51,7 @@ android {
     productFlavors  {
         create("dev") {
             buildConfigField("String", "BASE_URL", "\"https://api.thecatapi.com/\"")
+            buildConfigField("String", "CAT_API_KEY", "\"17d94b92-754f-46eb-99a0-65be65b5d18f\"")
         }
 
         create("prod") {
@@ -106,4 +107,5 @@ dependencies {
     // paging
     implementation("androidx.paging:paging-runtime-ktx:3.2.1")
     testImplementation("androidx.paging:paging-common-ktx:3.2.1")
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01")
 }
