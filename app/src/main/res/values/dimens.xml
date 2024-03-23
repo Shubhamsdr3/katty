@@ -3,6 +3,7 @@
     <dimen name="dimen12dp">12dp</dimen>
     <dimen name="dimen16dp">16dp</dimen>
     <dimen name="dimen32dp">32dp</dimen>
+    <dimen name="dimen40dp">40dp</dimen>
     <dimen name="dimen24dp">24dp</dimen>
     <dimen name="dimen0dp">0dp</dimen>
     <dimen name="dimen200dp">200dp</dimen>

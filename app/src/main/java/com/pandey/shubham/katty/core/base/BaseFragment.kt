@@ -5,8 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
+import com.google.android.material.snackbar.Snackbar
+import com.pandey.shubham.katty.R
 import com.pandey.shubham.katty.core.model.ErrorMessage
 import com.pandey.shubham.katty.core.utils.Callback
 
@@ -27,10 +31,8 @@ abstract class BaseFragment<VB: ViewBinding, T> : Fragment() {
         super.onAttach(context)
         if (parentFragment != null) {
             this._callback = parentFragment as T
-        } else if (context is Callback) {
-            this._callback = context as T
         } else {
-            throw IllegalArgumentException("$context must implement fragment callback") //TODO fix exception type.
+            this._callback = context as T
         }
     }
 
@@ -67,6 +69,17 @@ abstract class BaseFragment<VB: ViewBinding, T> : Fragment() {
         with(activity) {
             if (this is NetworkLoaderActivity) hideError()
         }
+
+    internal fun showActionSnackBar(
+        message: String,
+        actionText: String,
+        action: () -> Any
+    ) {
+        val snackBar = Snackbar.make(binding.root, message, Snackbar.LENGTH_INDEFINITE)
+        snackBar.setAction(actionText) { _ -> action.invoke() }
+        snackBar.setActionTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+        snackBar.show()
+    }
 
     protected abstract fun viewBinding(inflater: LayoutInflater, container: ViewGroup?): VB
 

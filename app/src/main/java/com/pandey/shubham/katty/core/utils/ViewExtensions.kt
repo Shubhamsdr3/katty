@@ -24,7 +24,7 @@ fun View.gone() {
     this.visibility = View.GONE
 }
 
-fun AppCompatImageView.setImage(imageUrl: String?, @DrawableRes placeHolder: Int = R.drawable.ic_launcher_background) {
+fun AppCompatImageView.setNetworkImage(imageUrl: String?, @DrawableRes placeHolder: Int = R.drawable.ic_launcher_background) {
     Glide.with(this)
         .load(imageUrl)
         .placeholder(ContextCompat.getDrawable(context, placeHolder))

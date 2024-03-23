@@ -3,9 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:fillViewport="true">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -14,6 +15,7 @@
             android:id="@+id/feed_detail_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            app:layout_constraintTop_toTopOf="parent"
             app:navigationIcon="@drawable/icon_arrow_back_24" />
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -21,7 +23,64 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen240dp"
             android:scaleType="fitXY"
-            app:srcCompat="@drawable/ic_launcher_background" />
+            app:layout_constraintTop_toBottomOf="@+id/feed_detail_toolbar"
+            tools:srcCompat="@drawable/ic_launcher_background" />
 
-    </LinearLayout>
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_favourite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dimen24dp"
+            android:layout_marginBottom="@dimen/dimen24dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_feed_detail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/icon_heart_outlined_24" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_name"
+            android:layout_width="@dimen/dimen0dp"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dimen8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_feed_detail" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_origin"
+            android:layout_width="@dimen/dimen0dp"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dimen8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_temperament"
+            android:layout_width="@dimen/dimen0dp"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dimen8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_origin" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_nickname"
+            android:layout_width="@dimen/dimen0dp"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dimen8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_temperament" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_description"
+            android:layout_width="@dimen/dimen0dp"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dimen8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_temperament" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

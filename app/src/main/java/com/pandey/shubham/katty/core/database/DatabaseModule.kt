@@ -28,7 +28,7 @@ class DatabaseModule {
 
     private val Migration_1_2 = object : Migration(1, 2) {
         override fun migrate(db: SupportSQLiteDatabase) {
-            db.execSQL("""CREATE TABLE IF NOT EXISTS `breed_info` (`song_id` INTEGER NOT NULL, `lyrics` TEXT NOT NULL, PRIMARY KEY(`song_id`))""")
+            db.execSQL("""ALTER TABLE `breed_info` ADD COLUMN `lifeSpan` TEXT NOT NULL DEFAULT ''""")
         }
     }
 }

@@ -20,6 +20,9 @@ interface CatInfoDao {
     @Query("SELECT * FROM breed_info ORDER BY createdAt DESC")
     suspend fun getFavouriteBreeds(): List<CatBreedInfoEntity>
 
+    @Query("SELECT * FROM breed_info WHERE breedId=:breedId")
+    suspend fun getFavouriteBreed(breedId: String?): CatBreedInfoEntity?
+
     @Query("DELETE FROM breed_info")
     suspend fun deleteAll()
 }

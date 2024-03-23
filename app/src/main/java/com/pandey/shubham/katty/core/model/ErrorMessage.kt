@@ -8,6 +8,6 @@ import androidx.annotation.Keep
 
 @Keep
 data class ErrorMessage(
-    val errorCode: Int,
+    val errorCode: Int? = null,
     val errorMessage: String?
 )

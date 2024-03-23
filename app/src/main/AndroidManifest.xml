@@ -17,7 +17,7 @@
         android:theme="@style/Theme.Katty"
         tools:targetApi="31">
         <activity
-            android:name=".feature.feed.ui.HomeActivity"
+            android:name=".features.feed.ui.HomeActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Katty">

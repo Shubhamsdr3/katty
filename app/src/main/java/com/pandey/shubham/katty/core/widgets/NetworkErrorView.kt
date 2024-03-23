@@ -20,20 +20,6 @@ class NetworkErrorView @JvmOverloads constructor(
 
     fun setData(error: ErrorMessage, retryCallback: () -> Unit) {
         binding.tvErrorMessage.text = error.errorMessage
-        showErrorByCode(error.errorCode)
         binding.btnRetry.setOnClickListener { retryCallback() }
-    }
-
-    private fun showErrorByCode(errorCode: Int) {
-        when(errorCode) {
-            500 -> showServerError()
-            else -> {
-                // do nothing
-            }
-        }
-    }
-
-    private fun showServerError() {
-
     }
 }
