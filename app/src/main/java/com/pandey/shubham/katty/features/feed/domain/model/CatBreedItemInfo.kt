@@ -8,7 +8,7 @@ import java.util.UUID
 
 @Keep
 data class CatBreedItemInfo(
-    val breedId: String?,
+    val breedId: String,
     val imageUrl: String?,
     val name: String?,
     val weight: Weight?,
@@ -21,7 +21,7 @@ data class CatBreedItemInfo(
 
     fun toBreedInfoEntity(): CatBreedInfoEntity {
         return CatBreedInfoEntity(
-            breedId = breedId ?: UUID.randomUUID().toString(),
+            breedId = breedId,
             imageUrl = imageUrl,
             name = name,
             weight = weight,

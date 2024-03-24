@@ -3,12 +3,12 @@ package com.pandey.shubham.katty.features.feed.data.repository
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import com.pandey.shubham.katty.core.database.AppDatabase
-import com.pandey.shubham.katty.features.feed.data.FeedDataSource
+import com.pandey.shubham.katty.core.database.CatBreedInfoEntity
 import com.pandey.shubham.katty.core.network.FeedApiService
 import com.pandey.shubham.katty.core.network.NetworkState
 import com.pandey.shubham.katty.core.utils.DEFAULT_PAGE_SIZE
 import com.pandey.shubham.katty.core.utils.MAX_CACHED_ITEMS
-import com.pandey.shubham.katty.features.feed.domain.model.CatBreedItemInfo
+import com.pandey.shubham.katty.features.feed.data.FeedDataSource
 import kotlinx.coroutines.flow.flow
 import java.io.IOException
 import javax.inject.Inject
@@ -33,8 +33,8 @@ class FeedRepository @Inject constructor(
             maxSize = MAX_CACHED_ITEMS,
         )
 
-    suspend fun addFavourite(catBreedItemInfo: CatBreedItemInfo) {
-        appDatabase.cateInfoDao().addFavouriteBreed(catBreedItemInfo.toBreedInfoEntity())
+    suspend fun addFavourite(catBreedItemInfo: CatBreedInfoEntity) {
+        appDatabase.cateInfoDao().addFavouriteBreed(catBreedItemInfo)
     }
 
     suspend fun getFavouriteFromDb(breedId: String?) = appDatabase.cateInfoDao().getFavouriteBreed(breedId)

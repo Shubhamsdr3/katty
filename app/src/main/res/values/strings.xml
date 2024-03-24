@@ -6,7 +6,7 @@
     <string name="txt_origin">Origin:  %s</string>
     <string name="txt_temperament">Temperament:  %s</string>
     <string name="txt_description">Description:  %s</string>
-    <string name="internet_error">Network not available</string>
+    <string name="internet_error">No internet connection</string>
     <string name="something_went_wrong">Something went wrong</string>
     <string name="try_again">Try again</string>
 </resources>

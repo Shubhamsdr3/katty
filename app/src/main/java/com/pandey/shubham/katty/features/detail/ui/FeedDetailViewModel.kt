@@ -36,7 +36,7 @@ class FeedDetailViewModel @Inject constructor(private val feedRepository: FeedRe
 
     fun addToFavourite(catBreedItemInfo: CatBreedItemInfo) {
         viewModelScope.launch {
-            feedRepository.addFavourite(catBreedItemInfo)
+            feedRepository.addFavourite(catBreedItemInfo.toBreedInfoEntity())
         }
     }
 

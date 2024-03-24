@@ -3,6 +3,7 @@ package com.pandey.shubham.katty.core.utils
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import com.pandey.shubham.katty.KattyApp
 
 /**
  * Created by shubhampandey
@@ -10,15 +11,9 @@ import android.net.NetworkCapabilities
 object Utility {
 
     fun getImageUrl(imageRefId: String?) = "https://cdn2.thecatapi.com/images/${imageRefId}.jpg"
-    
-    fun getAspectRatio(imageWidth: Int?, imageHeight: Int?): Float {
-        val width: Int = imageWidth ?: 0
-        val height: Int = imageHeight ?: 0
-        if (width != 0 && height != 0) return (width.toFloat() / height)
-        return 0f
-    }
 
-    fun isNetworkAvailable(context: Context): Boolean {
+    fun isNetworkAvailable(): Boolean {
+        val context = KattyApp.getAppContext() ?: return false
         val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val network = connectivityManager.activeNetwork ?: return false
         val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false

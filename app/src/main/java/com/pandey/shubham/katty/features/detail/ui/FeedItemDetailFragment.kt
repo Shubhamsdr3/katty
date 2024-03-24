@@ -37,15 +37,15 @@ class FeedItemDetailFragment : BaseFragment<FragmentFeedItemDetailBinding, Callb
     }
 
     private fun attachListener() {
-        binding.feedDetailToolbar.setNavigationOnClickListener {
-            onBackPressed()
-        }
-        binding.ivFavourite.setOnClickListener {
-            catBreedItemInfo?.let {
-                it.isFavourite = !it.isFavourite
-                viewModel.addToFavourite(it)
-                toggleFavourite(it.isFavourite)
-            }
+        binding.feedDetailToolbar.setNavigationOnClickListener { onBackPressed() }
+        binding.ivFavourite.setOnClickListener { onFavoriteClicked() }
+    }
+
+    private fun onFavoriteClicked() {
+        catBreedItemInfo?.let {
+            it.isFavourite = !it.isFavourite
+            viewModel.addToFavourite(it)
+            toggleFavourite(it.isFavourite)
         }
     }
 
@@ -67,8 +67,8 @@ class FeedItemDetailFragment : BaseFragment<FragmentFeedItemDetailBinding, Callb
 
     private fun handleError(throwable: Throwable?) {
         hideLoader()
-        showError(ErrorMessage(500, throwable?.message)) {
-            // retry
+        showError(ErrorMessage(errorMessage = throwable?.message)) {
+            viewModel.getCateDetail(cateBreedId)
         }
     }
 
@@ -86,7 +86,7 @@ class FeedItemDetailFragment : BaseFragment<FragmentFeedItemDetailBinding, Callb
     }
 
     private fun toggleFavourite(isFavourite: Boolean) {
-        if (isFavourite == true) {
+        if (isFavourite) {
             binding.ivFavourite.setDrawable(R.drawable.icon_heart_filled_red_24)
         } else {
             binding.ivFavourite.setDrawable(R.drawable.icon_heart_outlined_24)

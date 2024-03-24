@@ -11,7 +11,7 @@ import kotlinx.parcelize.Parcelize
 @Keep
 @Parcelize
 data class CatBreedResponseItem(
-    @SerializedName("id") val breedId: String?,
+    @SerializedName("id") val breedId: String,
     val weight: Weight?,
     val indoor: Int?,
     val name: String?,

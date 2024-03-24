@@ -28,8 +28,8 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_favourite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/dimen32dp"
+            android:layout_height="@dimen/dimen32dp"
             android:layout_marginEnd="@dimen/dimen24dp"
             android:layout_marginBottom="@dimen/dimen24dp"
             android:scaleType="fitCenter"

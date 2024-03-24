@@ -5,11 +5,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
+import androidx.paging.map
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pandey.shubham.katty.R
 import com.pandey.shubham.katty.core.base.BaseFragment
+import com.pandey.shubham.katty.core.database.CatBreedInfoEntity
 import com.pandey.shubham.katty.databinding.FragmentHomeFeedBinding
 import com.pandey.shubham.katty.features.feed.ui.callbacks.HomeFeedFragmentCallback
 import com.pandey.shubham.katty.features.feed.domain.model.CatBreedItemInfo
@@ -17,6 +19,7 @@ import com.pandey.shubham.katty.features.feed.ui.adapter.FeedLoadingAdapter
 import com.pandey.shubham.katty.features.feed.ui.adapter.HomeFeedAdapter
 import com.pandey.shubham.katty.core.model.ErrorMessage
 import com.pandey.shubham.katty.core.utils.SpaceItemDecoration
+import com.pandey.shubham.katty.core.utils.Utility
 import com.pandey.shubham.katty.core.utils.gone
 import com.pandey.shubham.katty.core.utils.visible
 import dagger.hilt.android.AndroidEntryPoint
@@ -47,6 +50,11 @@ class HomeFeedFragment : BaseFragment<FragmentHomeFeedBinding, HomeFeedFragmentC
 
     private fun attachListener() {
         binding.swipeRefresh.setOnRefreshListener { feedAdapter.refresh() }
+        if (!Utility.isNetworkAvailable()) {
+            showActionSnackBar(getString(R.string.internet_error), getString(R.string.try_again)) {
+                feedAdapter.retry()
+            }
+        }
     }
 
     private fun attachObserver() {
@@ -108,10 +116,10 @@ class HomeFeedFragment : BaseFragment<FragmentHomeFeedBinding, HomeFeedFragmentC
         with(binding.rvFeed) {
             layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
             val loadingStateAdapter = FeedLoadingAdapter { feedAdapter.retry() }
-            feedAdapter.addLoadStateListener { loadStates ->
-                loadingStateAdapter.loadState = loadStates.refresh
-                loadingStateAdapter.loadState = loadStates.append
-            }
+//            feedAdapter.addLoadStateListener { loadStates ->
+//                loadingStateAdapter.loadState = loadStates.refresh
+//                loadingStateAdapter.loadState = loadStates.append
+//            }
             adapter = ConcatAdapter(loadingStateAdapter, feedAdapter, loadingStateAdapter)
             addItemDecoration(SpaceItemDecoration(resources.getDimensionPixelOffset(R.dimen.dimen32dp), RecyclerView.VERTICAL))
         }

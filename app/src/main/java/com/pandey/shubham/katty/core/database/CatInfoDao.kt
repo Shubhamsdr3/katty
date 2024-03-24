@@ -15,13 +15,19 @@ import androidx.room.Upsert
 interface CatInfoDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addFavouriteBreed(catList: CatBreedInfoEntity)
+    suspend fun addFavouriteBreed(catBreed: CatBreedInfoEntity)
 
     @Query("SELECT * FROM breed_info ORDER BY createdAt DESC")
     suspend fun getFavouriteBreeds(): List<CatBreedInfoEntity>
 
     @Query("SELECT * FROM breed_info WHERE breedId=:breedId")
     suspend fun getFavouriteBreed(breedId: String?): CatBreedInfoEntity?
+
+    @Upsert
+    suspend fun addUpdateBreeds(items: List<CatBreedInfoEntity>)
+
+    @Query("SELECT * FROM breed_info")
+    fun pagingSource(): PagingSource<Int, CatBreedInfoEntity>
 
     @Query("DELETE FROM breed_info")
     suspend fun deleteAll()
