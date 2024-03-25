@@ -5,14 +5,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.snackbar.Snackbar
 import com.pandey.shubham.katty.R
 import com.pandey.shubham.katty.core.model.ErrorMessage
-import com.pandey.shubham.katty.core.utils.Callback
+
 
 /**
  * Created by shubhampandey
@@ -47,6 +46,7 @@ abstract class BaseFragment<VB: ViewBinding, T> : Fragment() {
     }
 
     protected fun onBackPressed() {
+        handleBackPressed()
         requireActivity().onBackPressedDispatcher.onBackPressed()
     }
 
@@ -84,6 +84,8 @@ abstract class BaseFragment<VB: ViewBinding, T> : Fragment() {
     protected abstract fun viewBinding(inflater: LayoutInflater, container: ViewGroup?): VB
 
     protected abstract fun populateViews()
+
+    protected abstract fun handleBackPressed()
 
     override fun onDestroy() {
         super.onDestroy()

@@ -23,3 +23,6 @@ inline fun <reified T> Gson.fromJson(json: String?): T? {
 
 // coroutines
 fun IOScope() = CoroutineScope(Dispatchers.IO + SupervisorJob())
+
+
+public fun DefaultScope() = CoroutineScope(SupervisorJob() + Dispatchers.Default)

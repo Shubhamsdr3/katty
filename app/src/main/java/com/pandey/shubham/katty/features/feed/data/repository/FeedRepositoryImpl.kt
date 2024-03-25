@@ -1,0 +1,58 @@
+package com.pandey.shubham.katty.features.feed.data.repository
+
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import com.pandey.shubham.katty.core.database.AppDatabase
+import com.pandey.shubham.katty.core.database.CatBreedInfoEntity
+import com.pandey.shubham.katty.core.network.FeedApiService
+import com.pandey.shubham.katty.core.network.NetworkState
+import com.pandey.shubham.katty.core.utils.DEFAULT_PAGE_SIZE
+import com.pandey.shubham.katty.core.utils.MAX_CACHED_ITEMS
+import com.pandey.shubham.katty.features.feed.data.FeedDataSource
+import com.pandey.shubham.katty.features.feed.data.dtos.CatBreedResponseItem
+import com.pandey.shubham.katty.features.feed.domain.model.CatBreedItemInfo
+import kotlinx.coroutines.flow.flow
+import java.io.IOException
+import javax.inject.Inject
+
+/**
+ * Created by shubhampandey
+ */
+
+class FeedRepositoryImpl @Inject constructor(
+    private val apiService: FeedApiService,
+    private val appDatabase: AppDatabase
+): FeedRepository {
+
+    override fun getCatImagesPaginated() = Pager(
+        config = getDefaultConfig(),
+        pagingSourceFactory = { FeedDataSource(apiService, appDatabase) },
+    ).flow
+
+    private fun getDefaultConfig() =
+        PagingConfig(
+            pageSize = DEFAULT_PAGE_SIZE,
+            maxSize = MAX_CACHED_ITEMS,
+        )
+
+    override suspend fun addFavouriteBreed(catBreedItemInfo: CatBreedInfoEntity) {
+        appDatabase.cateInfoDao().addFavouriteBreed(catBreedItemInfo)
+    }
+
+    override fun getFavouriteFromDb(breedId: String?) = appDatabase.cateInfoDao().getFavouriteBreed(breedId)
+
+    override suspend fun getCatBreedDetail(catBreedId: String?): NetworkState<CatBreedItemInfo> {
+        return try {
+            if (catBreedId.isNullOrBlank()) throw IllegalArgumentException("Invalid id")
+            val response = apiService.getCatBreedDetail(catBreedId)
+            if (response.isSuccessful) {
+                val catBreedItem = response.body()?.toCatBreedItem()
+                NetworkState.Success(catBreedItem)
+            } else {
+                NetworkState.Error(IOException("Something went wrong"))
+            }
+        } catch (ex: Exception) {
+            NetworkState.Error(ex)
+        }
+    }
+}

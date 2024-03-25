@@ -1,11 +1,13 @@
 package com.pandey.shubham.katty.core.database
 
+import androidx.lifecycle.LiveData
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Upsert
+import kotlinx.coroutines.flow.Flow
 
 /**
  * Created by shubhampandey
@@ -21,7 +23,7 @@ interface CatInfoDao {
     suspend fun getFavouriteBreeds(): List<CatBreedInfoEntity>
 
     @Query("SELECT * FROM breed_info WHERE breedId=:breedId")
-    suspend fun getFavouriteBreed(breedId: String?): CatBreedInfoEntity?
+    fun getFavouriteBreed(breedId: String?): Flow<CatBreedInfoEntity?>
 
     @Upsert
     suspend fun addUpdateBreeds(items: List<CatBreedInfoEntity>)

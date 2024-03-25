@@ -33,9 +33,9 @@ class FeedDataSource(
             val breedItemList: List<CatBreedItemInfo> = if (Utility.isNetworkAvailable()) {
                 val favouriteIdList = favouriteBreedList.map { it.breedId }
                 val feedResponse = apiService.getCatBreeds(offset = DEFAULT_PAGE_SIZE, pageNumber = position, "DESC")
-                val feedItems = feedResponse.body() as ArrayList<CatBreedResponseItem>
-                hasNext = feedItems.isNotEmpty()
-                feedItems.map { it.toCatBreedItem(favouriteIdList.contains(it.breedId)) }
+                val feedItems = feedResponse.body() as? ArrayList<CatBreedResponseItem>
+                hasNext = feedItems.isNullOrEmpty()
+                feedItems?.map { it.toCatBreedItem(favouriteIdList.contains(it.breedId)) } ?: emptyList()
             } else {
                 favouriteBreedList.map { it.toCatBreedItem() }
             }

@@ -7,10 +7,10 @@ import androidx.fragment.app.viewModels
 import com.pandey.shubham.katty.R
 import com.pandey.shubham.katty.core.base.BaseFragment
 import com.pandey.shubham.katty.core.model.ErrorMessage
-import com.pandey.shubham.katty.databinding.FragmentFeedItemDetailBinding
 import com.pandey.shubham.katty.core.utils.Callback
 import com.pandey.shubham.katty.core.utils.setDrawable
 import com.pandey.shubham.katty.core.utils.setNetworkImage
+import com.pandey.shubham.katty.databinding.FragmentFeedItemDetailBinding
 import com.pandey.shubham.katty.features.feed.domain.model.CatBreedItemInfo
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -91,6 +91,10 @@ class FeedItemDetailFragment : BaseFragment<FragmentFeedItemDetailBinding, Callb
         } else {
             binding.ivFavourite.setDrawable(R.drawable.icon_heart_outlined_24)
         }
+    }
+
+    override fun handleBackPressed() {
+        // do nothing
     }
 
     companion object {

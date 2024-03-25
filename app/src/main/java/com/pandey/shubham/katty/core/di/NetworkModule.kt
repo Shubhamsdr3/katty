@@ -1,4 +1,4 @@
-package com.pandey.shubham.katty.core.network
+package com.pandey.shubham.katty.core.di
 
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.google.gson.FieldNamingPolicy
@@ -6,6 +6,7 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.pandey.shubham.katty.BuildConfig
+import com.pandey.shubham.katty.core.network.FeedApiService
 import com.pandey.shubham.katty.core.utils.getAppContext
 import dagger.Module
 import dagger.Provides

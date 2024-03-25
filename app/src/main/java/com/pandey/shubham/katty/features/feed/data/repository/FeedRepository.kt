@@ -1,61 +1,23 @@
 package com.pandey.shubham.katty.features.feed.data.repository
 
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import com.pandey.shubham.katty.core.database.AppDatabase
+import androidx.lifecycle.LiveData
+import androidx.paging.PagingData
 import com.pandey.shubham.katty.core.database.CatBreedInfoEntity
-import com.pandey.shubham.katty.core.network.FeedApiService
 import com.pandey.shubham.katty.core.network.NetworkState
-import com.pandey.shubham.katty.core.utils.DEFAULT_PAGE_SIZE
-import com.pandey.shubham.katty.core.utils.MAX_CACHED_ITEMS
-import com.pandey.shubham.katty.features.feed.data.FeedDataSource
-import kotlinx.coroutines.flow.flow
-import java.io.IOException
-import javax.inject.Inject
+import com.pandey.shubham.katty.features.feed.data.dtos.CatBreedResponseItem
+import com.pandey.shubham.katty.features.feed.domain.model.CatBreedItemInfo
+import kotlinx.coroutines.flow.Flow
 
 /**
  * Created by shubhampandey
  */
+interface FeedRepository {
 
-class FeedRepository @Inject constructor(
-    private val apiService: FeedApiService,
-    private val appDatabase: AppDatabase
-) {
+    fun getCatImagesPaginated(): Flow<PagingData<CatBreedItemInfo>>
 
-    fun getCateImagesPaginated() = Pager(
-        config = getDefaultConfig(),
-        pagingSourceFactory = { FeedDataSource(apiService, appDatabase) },
-    ).flow
+    suspend fun addFavouriteBreed(catBreedItemInfo: CatBreedInfoEntity)
 
-    private fun getDefaultConfig() =
-        PagingConfig(
-            pageSize = DEFAULT_PAGE_SIZE,
-            maxSize = MAX_CACHED_ITEMS,
-        )
+    fun getFavouriteFromDb(breedId: String?): Flow<CatBreedInfoEntity?>
 
-    suspend fun addFavourite(catBreedItemInfo: CatBreedInfoEntity) {
-        appDatabase.cateInfoDao().addFavouriteBreed(catBreedItemInfo)
-    }
-
-    suspend fun getFavouriteFromDb(breedId: String?) = appDatabase.cateInfoDao().getFavouriteBreed(breedId)
-
-    fun getCatBreedDetail(catBreedId: String?) = flow {
-        emit(NetworkState.Loading)
-        try {
-            if (catBreedId.isNullOrBlank()) throw IllegalArgumentException("Invalid id")
-            val cateBreedInfo = getFavouriteFromDb(catBreedId)
-            if (cateBreedInfo != null) {
-                emit(NetworkState.Success(cateBreedInfo.toCatBreedItem()))
-            } else {
-                val response = apiService.getCatBreedDetail(catBreedId)
-                if (response.isSuccessful) {
-                    emit(NetworkState.Success(response.body()))
-                } else {
-                    emit(NetworkState.Error(IOException("Something went wrong")))
-                }
-            }
-        } catch (ex: Exception) {
-            emit(NetworkState.Error(ex))
-        }
-    }
+    suspend fun getCatBreedDetail(catBreedId: String?): NetworkState<CatBreedItemInfo>
 }

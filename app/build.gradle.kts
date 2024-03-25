@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -7,6 +9,8 @@ plugins {
     id ("dagger.hilt.android.plugin")
     id("kotlin-parcelize")
 }
+
+val katApikey: String = gradleLocalProperties(rootDir).getProperty("KAT_API_KEY")
 
 android {
     namespace = "com.pandey.shubham.katty"
@@ -51,7 +55,7 @@ android {
     productFlavors  {
         create("dev") {
             buildConfigField("String", "BASE_URL", "\"https://api.thecatapi.com/\"")
-            buildConfigField("String", "CAT_API_KEY", "\"17d94b92-754f-46eb-99a0-65be65b5d18f\"")
+            buildConfigField("String", "CAT_API_KEY", "\"$katApikey\"")
         }
 
         create("prod") {
@@ -77,6 +81,9 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     testImplementation("io.mockk:mockk:1.13.5")
+    testImplementation("app.cash.turbine:turbine:1.1.0")
+    testImplementation("com.google.truth:truth:1.1")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.1-Beta")
 
     // room
     implementation("androidx.room:room-runtime:2.6.1")

@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:fillViewport="true">
+    android:background="@color/white"
+    android:clickable="true"
+    android:fillViewport="true"
+    android:focusable="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -33,6 +36,7 @@
             android:layout_marginEnd="@dimen/dimen24dp"
             android:layout_marginBottom="@dimen/dimen24dp"
             android:scaleType="fitCenter"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/iv_feed_detail"
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/icon_heart_outlined_24" />

@@ -66,6 +66,10 @@ class HomeFeedAdapter(
         }
     }
 
+    fun updateItem(position: Int, isFavorite: Boolean) {
+        notifyItemChanged(position, isFavorite)
+    }
+
     companion object {
         private val DIFF_UTILS = object : DiffUtil.ItemCallback<CatBreedItemInfo>() {
             override fun areItemsTheSame(oldItem: CatBreedItemInfo, newItem: CatBreedItemInfo): Boolean {
