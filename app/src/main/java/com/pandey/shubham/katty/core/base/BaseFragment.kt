@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.snackbar.Snackbar
 import com.pandey.shubham.katty.R
-import com.pandey.shubham.katty.core.model.ErrorMessage
+import com.pandey.shubham.katty.core.failure.model.ErrorMessage
 
 
 /**

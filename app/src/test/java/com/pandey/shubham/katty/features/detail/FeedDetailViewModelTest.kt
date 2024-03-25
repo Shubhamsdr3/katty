@@ -3,7 +3,7 @@ package com.pandey.shubham.katty.features.detail
 import com.pandey.shubham.katty.features.detail.ui.FeedDetailViewModel
 import com.pandey.shubham.katty.features.feed.data.repository.FeedRepositoryImpl
 import com.pandey.shubham.katty.features.feed.domain.usecase.AddFavoriteUseCase
-import com.pandey.shubham.katty.features.feed.domain.usecase.GetCatDetailUseCase
+import com.pandey.shubham.katty.features.detail.domain.usecase.GetCatDetailUseCase
 import io.mockk.mockk
 import org.junit.Before
 import org.junit.Test

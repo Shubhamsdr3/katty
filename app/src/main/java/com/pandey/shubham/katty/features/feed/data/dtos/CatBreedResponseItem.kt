@@ -29,7 +29,7 @@ data class CatBreedResponseItem(
     fun toCatBreedItem(isFavourite: Boolean = false): CatBreedItemInfo {
         return CatBreedItemInfo(
             breedId = breedId,
-            imageUrl = Utility.getImageUrl(imageId),
+            imageUrl = Utility.getImageUrl(imageId), // TODO: get this from api.
             name = name,
             weight = weight,
             temperament = temperament,

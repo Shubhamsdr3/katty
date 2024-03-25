@@ -1,4 +1,4 @@
-package com.pandey.shubham.katty.core.model
+package com.pandey.shubham.katty.core.failure.model
 
 import androidx.annotation.Keep
 

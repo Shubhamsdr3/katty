@@ -11,3 +11,8 @@ sealed class NetworkState<out T: Any> {
 
     data object Loading: NetworkState<Nothing>()
 }
+
+fun <T: Any> NetworkState<T>.getResult(): T? = when (this) {
+    is NetworkState.Success -> data
+    else -> null
+}

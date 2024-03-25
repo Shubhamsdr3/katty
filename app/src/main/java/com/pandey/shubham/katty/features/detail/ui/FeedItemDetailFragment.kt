@@ -6,7 +6,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import com.pandey.shubham.katty.R
 import com.pandey.shubham.katty.core.base.BaseFragment
-import com.pandey.shubham.katty.core.model.ErrorMessage
+import com.pandey.shubham.katty.core.failure.model.ErrorMessage
 import com.pandey.shubham.katty.core.utils.Callback
 import com.pandey.shubham.katty.core.utils.setDrawable
 import com.pandey.shubham.katty.core.utils.setNetworkImage

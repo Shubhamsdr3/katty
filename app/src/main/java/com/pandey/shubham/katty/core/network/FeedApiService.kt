@@ -1,5 +1,6 @@
 package com.pandey.shubham.katty.core.network
 
+import com.pandey.shubham.katty.features.detail.data.CatImageResponse
 import com.pandey.shubham.katty.features.feed.data.dtos.CatBreedResponse
 import com.pandey.shubham.katty.features.feed.data.dtos.CatBreedResponseItem
 import retrofit2.Response
@@ -21,4 +22,7 @@ interface FeedApiService {
 
     @GET("v1/breeds/{id}")
     suspend fun getCatBreedDetail(@Path("id") catBreedId: String): Response<CatBreedResponseItem>
+
+    @GET("v1/images/search")
+    suspend fun getCatImages(@Query("breed_ids") catBreedId: String): Response<CatImageResponse>
 }

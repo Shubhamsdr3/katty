@@ -5,18 +5,26 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pandey.shubham.katty.core.network.NetworkState
+import com.pandey.shubham.katty.core.network.getResult
+import com.pandey.shubham.katty.features.detail.domain.model.CatDetailInfo
+import com.pandey.shubham.katty.features.detail.domain.usecase.GetCatImageUseCase
 import com.pandey.shubham.katty.features.feed.data.dtos.CatBreedResponseItem
 import com.pandey.shubham.katty.features.feed.domain.model.CatBreedItemInfo
 import com.pandey.shubham.katty.features.feed.domain.usecase.AddFavoriteUseCase
-import com.pandey.shubham.katty.features.feed.domain.usecase.GetCatDetailUseCase
+import com.pandey.shubham.katty.features.detail.domain.usecase.GetCatDetailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.zip
 import java.io.IOException
 import javax.inject.Inject
 
 /**
  * Created by shubhampandey
+ *
+ * TODO:
+ * 1. Get images for current breed.
+ *
  */
 @HiltViewModel
 class FeedDetailViewModel @Inject constructor(
@@ -36,7 +44,6 @@ class FeedDetailViewModel @Inject constructor(
             }
         }.launchIn(viewModelScope)
     }
-
 
     fun addToFavourite(catBreedItemInfo: CatBreedItemInfo) {
         addFavoriteUseCase(catBreedItemInfo.toBreedInfoEntity(), viewModelScope)

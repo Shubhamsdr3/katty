@@ -34,7 +34,7 @@ class FeedDataSource(
                 val favouriteIdList = favouriteBreedList.map { it.breedId }
                 val feedResponse = apiService.getCatBreeds(offset = DEFAULT_PAGE_SIZE, pageNumber = position, "DESC")
                 val feedItems = feedResponse.body() as? ArrayList<CatBreedResponseItem>
-                hasNext = feedItems.isNullOrEmpty()
+                hasNext = !feedItems.isNullOrEmpty()
                 feedItems?.map { it.toCatBreedItem(favouriteIdList.contains(it.breedId)) } ?: emptyList()
             } else {
                 favouriteBreedList.map { it.toCatBreedItem() }
@@ -42,7 +42,7 @@ class FeedDataSource(
             return LoadResult.Page(
                 data = breedItemList,
                 prevKey = if (position == 0) null else position.minus(1),
-                nextKey = if (hasNext) null else position.plus(1)
+                nextKey = if (!hasNext) null else position.plus(1)
             )
         } catch (ex: Exception) {
             Log.e(TAG, ex.toString())

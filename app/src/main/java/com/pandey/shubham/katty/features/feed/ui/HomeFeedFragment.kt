@@ -1,7 +1,14 @@
 package com.pandey.shubham.katty.features.feed.ui
 
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuItemCompat
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
@@ -11,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pandey.shubham.katty.R
 import com.pandey.shubham.katty.core.base.BaseFragment
 import com.pandey.shubham.katty.core.database.CatBreedInfoEntity
-import com.pandey.shubham.katty.core.model.ErrorMessage
+import com.pandey.shubham.katty.core.failure.model.ErrorMessage
 import com.pandey.shubham.katty.core.utils.SpaceItemDecoration
 import com.pandey.shubham.katty.core.utils.Utility
 import com.pandey.shubham.katty.core.utils.gone
@@ -21,12 +28,13 @@ import com.pandey.shubham.katty.features.feed.domain.model.CatBreedItemInfo
 import com.pandey.shubham.katty.features.feed.ui.adapter.FeedLoadingAdapter
 import com.pandey.shubham.katty.features.feed.ui.adapter.HomeFeedAdapter
 import com.pandey.shubham.katty.features.feed.ui.callbacks.HomeFeedFragmentCallback
+import com.pandey.shubham.katty.features.search.SearchActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-open class HomeFeedFragment : BaseFragment<FragmentHomeFeedBinding, HomeFeedFragmentCallback>() {
+class HomeFeedFragment : BaseFragment<FragmentHomeFeedBinding, HomeFeedFragmentCallback>() {
 
     private val viewModel: HomeFeedViewModel by viewModels()
 
@@ -44,9 +52,29 @@ open class HomeFeedFragment : BaseFragment<FragmentHomeFeedBinding, HomeFeedFrag
     }
 
     override fun populateViews() {
+        setupOptionMenu()
         attachListener()
         setFeedAdapter()
         attachObserver()
+    }
+
+    private fun setupOptionMenu() {
+        with(requireActivity() as AppCompatActivity) {
+            setSupportActionBar(binding.toolbar)
+            addMenuProvider(object : MenuProvider {
+                override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                    menuInflater.inflate(R.menu.main_menu, menu)
+                }
+
+                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                    when(menuItem.itemId) {
+                        R.id.action_search -> SearchActivity.start(this@with)
+                        R.id.action_refresh -> feedAdapter.refresh()
+                    }
+                    return true
+                }
+            }, viewLifecycleOwner)
+        }
     }
 
     private fun attachListener() {
@@ -148,8 +176,7 @@ open class HomeFeedFragment : BaseFragment<FragmentHomeFeedBinding, HomeFeedFrag
     }
 
     override fun handleBackPressed() {
-        if (currentDetailId.isNullOrBlank()) return
-        viewModel.getFavoriteBreed(currentDetailId!!)
+        // do nothing
     }
 
     companion object {

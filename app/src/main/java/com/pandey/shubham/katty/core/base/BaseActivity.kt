@@ -1,11 +1,15 @@
 package com.pandey.shubham.katty.core.base
 
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
+import com.pandey.shubham.katty.R
 import com.pandey.shubham.katty.core.utils.shouldInterceptBackPress
 import com.pandey.shubham.katty.core.utils.updateFragment
 
@@ -26,10 +30,12 @@ abstract class BaseActivity<VB: ViewBinding>: AppCompatActivity() {
                 isEnabled = false
                 onBackPressedDispatcher.onBackPressed()
             }
+            handleBackPressed()
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        window.statusBarColor = ContextCompat.getColor(this, R.color.color_secondary)
         super.onCreate(savedInstanceState)
         _binding = viewBinding()
         setContentView(binding.root)
@@ -40,12 +46,12 @@ abstract class BaseActivity<VB: ViewBinding>: AppCompatActivity() {
         @IdRes containerId: Int,
         fragment: Fragment,
         addToBackStack: Boolean = false,
-        allowStateLoss: Boolean = false
+        allowStateLoss: Boolean = true
     ) {
         supportFragmentManager.updateFragment(fragment, allowStateLoss) {
-            add(containerId, fragment, fragment::class.java.simpleName)
+            add(containerId, fragment, fragment::class.java.canonicalName)
             if (addToBackStack) {
-                addToBackStack(fragment::class.java.simpleName)
+                addToBackStack(fragment::class.java.canonicalName)
             }
         }
     }
@@ -56,4 +62,6 @@ abstract class BaseActivity<VB: ViewBinding>: AppCompatActivity() {
         super.onDestroy()
         _binding = null
     }
+
+    protected abstract fun handleBackPressed()
 }

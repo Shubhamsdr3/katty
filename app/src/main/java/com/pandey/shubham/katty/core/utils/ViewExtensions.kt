@@ -1,5 +1,7 @@
 package com.pandey.shubham.katty.core.utils
 
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
@@ -37,6 +39,7 @@ fun AppCompatImageView.setNetworkImage(imageUrl: String?, @DrawableRes placeHold
 
 fun AppCompatImageView.setDrawable(@DrawableRes resId: Int) {
     this.setImageDrawable(ContextCompat.getDrawable(context, resId))
+    this.visible()
 }
 
 inline fun <reified T> FragmentActivity.getTopFragment(): T?
@@ -59,4 +62,13 @@ inline fun FragmentManager.updateFragment(fragment: Fragment, allowStateLoss: Bo
 inline fun RecyclerView.ViewHolder.absoluteAdapterPosition(callback: (Int) -> Unit) {
     val position = absoluteAdapterPosition
     if (position != RecyclerView.NO_POSITION) callback(position)
+}
+
+
+fun onAfterTextChange(block: (CharSequence?) -> Unit) = object : TextWatcher{
+    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+    override fun afterTextChanged(s: Editable?) {
+        block(s)
+    }
 }

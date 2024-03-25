@@ -1,22 +1,19 @@
 package com.pandey.shubham.katty.features.feed.ui.viewholders
 
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.pandey.shubham.katty.R
-import com.pandey.shubham.katty.core.database.CatBreedInfoEntity
-import com.pandey.shubham.katty.databinding.ItemFeedViewBinding
+import com.pandey.shubham.katty.core.base.BaseViewHolder
 import com.pandey.shubham.katty.core.utils.setDrawable
+import com.pandey.shubham.katty.databinding.ItemFeedViewBinding
 import com.pandey.shubham.katty.features.feed.domain.model.CatBreedItemInfo
 
 /**
  * Created by shubhampandey
  */
-class FeedItemViewHolder(private val binding: ItemFeedViewBinding): RecyclerView.ViewHolder(binding.root) {
+class FeedItemViewHolder(override val binding: ItemFeedViewBinding): BaseViewHolder<CatBreedItemInfo, ItemFeedViewBinding>(binding) {
 
-    private val context by lazy { binding.root.context }
-
-    fun bind(catBreedItemInfo: CatBreedItemInfo) {
-        catBreedItemInfo.run {
+    override fun bind(data: CatBreedItemInfo) {
+        data.run {
             Glide.with(binding.root).load(imageUrl).into(binding.ivFeed)
             binding.tvName.text = context.getString(R.string.txt_name, name ?: "")
             binding.tvOrigin.text = context.getString(R.string.txt_origin, origin)

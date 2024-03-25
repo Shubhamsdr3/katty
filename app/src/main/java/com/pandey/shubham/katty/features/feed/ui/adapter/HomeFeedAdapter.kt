@@ -7,6 +7,7 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.pandey.shubham.katty.R
+import com.pandey.shubham.katty.core.base.BasePagingAdapter
 import com.pandey.shubham.katty.core.database.CatBreedInfoEntity
 import com.pandey.shubham.katty.databinding.ItemFeedViewBinding
 import com.pandey.shubham.katty.features.feed.domain.model.CatBreedItemInfo
@@ -19,9 +20,9 @@ import com.pandey.shubham.katty.core.utils.absoluteAdapterPosition
 class HomeFeedAdapter(
     private val onItemClick: (CatBreedItemInfo) -> Unit,
     private val onFavoriteClicked: (CatBreedItemInfo) -> Unit
-) : PagingDataAdapter<CatBreedItemInfo, FeedItemViewHolder>(DIFF_UTILS) {
+) : BasePagingAdapter<CatBreedItemInfo, FeedItemViewHolder>(DIFF_UTILS) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeedItemViewHolder {
+    override fun viewHolder(parent: ViewGroup, viewType: Int): FeedItemViewHolder {
         val itemBinding = ItemFeedViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         val viewHolder = FeedItemViewHolder(itemBinding)
         setItemClickListener(viewHolder)

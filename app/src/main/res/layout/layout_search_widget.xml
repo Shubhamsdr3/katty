@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/et_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="eg: Aegean"
+        android:background="@drawable/rect_border_background"
+        android:drawableEnd="@drawable/icon_search"
+        android:drawableTint="@color/black_secondary"
+        android:padding="@dimen/dimen12dp" />
+
+</LinearLayout>

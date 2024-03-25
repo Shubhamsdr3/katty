@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import com.pandey.shubham.katty.core.base.BaseCustomView
 import com.pandey.shubham.katty.databinding.LayoutNetworkViewBinding
-import com.pandey.shubham.katty.core.model.ErrorMessage
+import com.pandey.shubham.katty.core.failure.model.ErrorMessage
 
 /**
  * Created by shubhampandey

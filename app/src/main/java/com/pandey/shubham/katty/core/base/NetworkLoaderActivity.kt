@@ -1,6 +1,6 @@
 package com.pandey.shubham.katty.core.base
 
-import com.pandey.shubham.katty.core.model.ErrorMessage
+import com.pandey.shubham.katty.core.failure.model.ErrorMessage
 import com.pandey.shubham.katty.core.utils.gone
 import com.pandey.shubham.katty.core.utils.visible
 import com.pandey.shubham.katty.databinding.ActivityMainBinding
