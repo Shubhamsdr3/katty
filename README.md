@@ -1,7 +1,6 @@
 **Sample App:**
 
-![WhatsApp Image 2024-03-26 at 2 44 49 PM](https://github.com/Shubhamsdr3/katty/assets/17290386/b5a9ba3c-8240-4c1b-86a4-9e4be3cb6484)
-![WhatsApp Image 2024-03-26 at 2 44 49 PM (1)](https://github.com/Shubhamsdr3/katty/assets/17290386/e8110ffa-9bfa-4baf-bdaf-8997bad53a6a)
+![WhatsApp Image 2024-03-26 at 2 44 49 PM](https://github.com/Shubhamsdr3/katty/assets/17290386/b5a9ba3c-8240-4c1b-86a4-9e4be3cb6484) ![WhatsApp Image 2024-03-26 at 2 44 49 PM (1)](https://github.com/Shubhamsdr3/katty/assets/17290386/e8110ffa-9bfa-4baf-bdaf-8997bad53a6a)
 
 
 **Project structure:**
