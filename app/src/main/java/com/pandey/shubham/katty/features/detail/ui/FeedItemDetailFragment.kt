@@ -93,10 +93,6 @@ class FeedItemDetailFragment : BaseFragment<FragmentFeedItemDetailBinding, Callb
         }
     }
 
-    override fun handleBackPressed() {
-        // do nothing
-    }
-
     companion object {
 
         private const val CAT_BREED_ID = "cat_breed_id"

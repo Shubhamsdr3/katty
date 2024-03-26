@@ -46,7 +46,6 @@ abstract class BaseFragment<VB: ViewBinding, T> : Fragment() {
     }
 
     protected fun onBackPressed() {
-        handleBackPressed()
         requireActivity().onBackPressedDispatcher.onBackPressed()
     }
 
@@ -84,8 +83,6 @@ abstract class BaseFragment<VB: ViewBinding, T> : Fragment() {
     protected abstract fun viewBinding(inflater: LayoutInflater, container: ViewGroup?): VB
 
     protected abstract fun populateViews()
-
-    protected abstract fun handleBackPressed()
 
     override fun onDestroy() {
         super.onDestroy()

@@ -10,9 +10,7 @@ import com.pandey.shubham.katty.core.utils.DEFAULT_PAGE_SIZE
 import com.pandey.shubham.katty.core.utils.MAX_CACHED_ITEMS
 import com.pandey.shubham.katty.features.detail.data.CatImageResponse
 import com.pandey.shubham.katty.features.feed.data.FeedDataSource
-import com.pandey.shubham.katty.features.feed.data.dtos.CatBreedResponseItem
 import com.pandey.shubham.katty.features.feed.domain.model.CatBreedItemInfo
-import kotlinx.coroutines.flow.flow
 import java.io.IOException
 import javax.inject.Inject
 
@@ -37,8 +35,12 @@ class FeedRepositoryImpl @Inject constructor(
             maxSize = MAX_CACHED_ITEMS,
         )
 
-    override suspend fun addFavouriteBreed(catBreedItemInfo: CatBreedInfoEntity) {
-        appDatabase.cateInfoDao().addFavouriteBreed(catBreedItemInfo)
+    override suspend fun updateFavorite(catBreedItemInfo: CatBreedInfoEntity) {
+        if (catBreedItemInfo.isFavourite) {
+            appDatabase.cateInfoDao().addFavouriteBreed(catBreedItemInfo)
+        } else {
+            appDatabase.cateInfoDao().removeFavorite(catBreedItemInfo.breedId)
+        }
     }
 
     override fun getFavouriteFromDb(breedId: String?) = appDatabase.cateInfoDao().getFavouriteBreed(breedId)

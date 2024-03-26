@@ -1,4 +1,4 @@
-package com.pandey.shubham.katty.features.search
+package com.pandey.shubham.katty.features.search.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -18,10 +18,6 @@ class SearchFragment: BaseFragment<FragmentSearchBinding, Callback>() {
         binding.etSearch.onTextChanged(lifecycle) {
             //
         }
-    }
-
-    override fun handleBackPressed() {
-
     }
 
     companion object {

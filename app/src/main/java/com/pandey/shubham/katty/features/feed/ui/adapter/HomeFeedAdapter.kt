@@ -18,7 +18,7 @@ import com.pandey.shubham.katty.core.utils.absoluteAdapterPosition
  * Created by shubhampandey
  */
 class HomeFeedAdapter(
-    private val onItemClick: (CatBreedItemInfo) -> Unit,
+    private val onItemClick: (Int, CatBreedItemInfo) -> Unit,
     private val onFavoriteClicked: (CatBreedItemInfo) -> Unit
 ) : BasePagingAdapter<CatBreedItemInfo, FeedItemViewHolder>(DIFF_UTILS) {
 
@@ -33,7 +33,7 @@ class HomeFeedAdapter(
         with(viewHolder) {
             itemView.setOnClickListener {
                 absoluteAdapterPosition { position ->
-                    getItem(position) { onItemClick(it) }
+                    getItem(position) { onItemClick(position, it) }
                 }
             }
             itemView.findViewById<View>(R.id.iv_favourite).setOnClickListener {
@@ -68,6 +68,9 @@ class HomeFeedAdapter(
     }
 
     fun updateItem(position: Int, isFavorite: Boolean) {
+        getItem(position) {
+            it.isFavourite = isFavorite
+        }
         notifyItemChanged(position, isFavorite)
     }
 

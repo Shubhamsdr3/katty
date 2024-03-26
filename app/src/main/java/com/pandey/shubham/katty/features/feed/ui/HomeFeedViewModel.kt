@@ -25,14 +25,14 @@ class HomeFeedViewModel @Inject constructor(private val repository: FeedReposito
     fun fetchFeedDataPaginated() = repository.getCatImagesPaginated().cachedIn(viewModelScope).asLiveData()
     fun addToFavourite(favourite: CatBreedItemInfo) {
         viewModelScope.launch {
-            repository.addFavouriteBreed(favourite.toBreedInfoEntity())
+            repository.updateFavorite(favourite.toBreedInfoEntity())
         }
     }
 
     fun getFavoriteBreed(breedId: String) {
         viewModelScope.launch {
             repository.getFavouriteFromDb(breedId).collectLatest {
-                _homeUiState.postValue(HomeUiState.OnFavoriteEvent(it))
+                _homeUiState.value = HomeUiState.OnFavoriteEvent(it)
             }
         }
     }

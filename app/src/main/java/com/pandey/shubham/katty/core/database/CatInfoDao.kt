@@ -19,6 +19,9 @@ interface CatInfoDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addFavouriteBreed(catBreed: CatBreedInfoEntity)
 
+    @Query("DELETE FROM breed_info WHERE breedId=:catBreedId")
+    suspend fun removeFavorite(catBreedId: String)
+
     @Query("SELECT * FROM breed_info ORDER BY createdAt DESC")
     suspend fun getFavouriteBreeds(): List<CatBreedInfoEntity>
 

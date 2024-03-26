@@ -1,6 +1,7 @@
 package com.pandey.shubham.katty.features.feed.ui
 
 import android.os.Bundle
+import android.util.Log
 import com.pandey.shubham.katty.R
 import com.pandey.shubham.katty.core.base.NetworkLoaderActivity
 import com.pandey.shubham.katty.features.detail.ui.FeedItemDetailFragment
@@ -11,6 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class HomeActivity : NetworkLoaderActivity(), HomeFeedFragmentCallback {
 
+    private var backStackCount = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         loadFragment(savedInstanceState)
@@ -23,9 +25,16 @@ class HomeActivity : NetworkLoaderActivity(), HomeFeedFragmentCallback {
 
     override fun openDetailFragment(catBreedId: String?, isFavorite: Boolean) {
         openFragment(R.id.feed_container, FeedItemDetailFragment.newInstance(catBreedId, isFavorite), addToBackStack = true)
+        backStackCount = supportFragmentManager.backStackEntryCount
     }
 
-    override fun handleBackPressed() {
-        // do nothing
+    override fun onBackStackUpdate() {
+        if (supportFragmentManager.backStackEntryCount == backStackCount - 1) {
+            val homeFragment = supportFragmentManager.findFragmentByTag(HomeFeedFragment::class.java.canonicalName)
+            if (homeFragment != null && homeFragment is HomeFeedFragment) {
+                homeFragment.updateFavorite()
+            }
+        }
+        backStackCount = supportFragmentManager.backStackEntryCount
     }
 }

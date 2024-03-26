@@ -29,7 +29,7 @@
 
         <activity
             android:launchMode="singleTop"
-            android:name="com.pandey.shubham.katty.features.search.SearchActivity" />
+            android:name="com.pandey.shubham.katty.features.search.ui.SearchActivity" />
 
     </application>
 

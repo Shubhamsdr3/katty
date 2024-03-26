@@ -14,7 +14,7 @@ class AddFavoriteUseCase @Inject constructor (private val repository: FeedReposi
     override fun run(param: CatBreedInfoEntity?, scope : CoroutineScope) {
         if (param == null) return
         scope.launch {
-            repository.addFavouriteBreed(param)
+            repository.updateFavorite(param)
         }
     }
 }

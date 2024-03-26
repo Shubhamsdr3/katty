@@ -1,9 +1,9 @@
 package com.pandey.shubham.katty.core.base
 
-import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
 
-abstract class BaseAdapter<T> : RecyclerView.Adapter<BaseAdapter<T>.BaseViewHolder>() {
+abstract class BaseAdapter<T, VB: ViewBinding> : RecyclerView.Adapter<BaseViewHolder<T, VB>>() {
 
     protected val models = mutableListOf<T>()
 
@@ -13,13 +13,9 @@ abstract class BaseAdapter<T> : RecyclerView.Adapter<BaseAdapter<T>.BaseViewHold
         notifyDataSetChanged()
     }
 
-    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: BaseViewHolder<T, VB>, position: Int) {
         holder.bind(models[position])
     }
 
     override fun getItemCount() = models.size
-
-    abstract inner class BaseViewHolder constructor(view: View) : RecyclerView.ViewHolder(view) {
-        abstract fun bind(model: T)
-    }
 }

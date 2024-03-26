@@ -16,7 +16,7 @@ interface FeedRepository {
 
     fun getCatImagesPaginated(): Flow<PagingData<CatBreedItemInfo>>
 
-    suspend fun addFavouriteBreed(catBreedItemInfo: CatBreedInfoEntity)
+    suspend fun updateFavorite(catBreedItemInfo: CatBreedInfoEntity)
 
     fun getFavouriteFromDb(breedId: String?): Flow<CatBreedInfoEntity?>
 

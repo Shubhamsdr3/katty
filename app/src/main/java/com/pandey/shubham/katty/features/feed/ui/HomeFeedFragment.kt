@@ -1,13 +1,12 @@
 package com.pandey.shubham.katty.features.feed.ui
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.MenuHost
-import androidx.core.view.MenuItemCompat
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -28,7 +27,7 @@ import com.pandey.shubham.katty.features.feed.domain.model.CatBreedItemInfo
 import com.pandey.shubham.katty.features.feed.ui.adapter.FeedLoadingAdapter
 import com.pandey.shubham.katty.features.feed.ui.adapter.HomeFeedAdapter
 import com.pandey.shubham.katty.features.feed.ui.callbacks.HomeFeedFragmentCallback
-import com.pandey.shubham.katty.features.search.SearchActivity
+import com.pandey.shubham.katty.features.search.ui.SearchActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -38,12 +37,13 @@ class HomeFeedFragment : BaseFragment<FragmentHomeFeedBinding, HomeFeedFragmentC
 
     private val viewModel: HomeFeedViewModel by viewModels()
 
-    private var currentDetailId: String? = null
+    private var currentDetailPosition: Int = 0
+    private var currentDetailId : String? = null
 
     private val feedAdapter: HomeFeedAdapter by lazy {
         HomeFeedAdapter(
-            { openDetailFragment(it) },
-            { onFavouriteClicked(it) }
+            { position, item -> openDetailFragment(position, item) },
+            { item -> onFavouriteClicked(item) }
         )
     }
 
@@ -111,8 +111,10 @@ class HomeFeedFragment : BaseFragment<FragmentHomeFeedBinding, HomeFeedFragmentC
     }
 
     private fun updateFavouriteItem(catBreedItemInfo: CatBreedInfoEntity?) {
-        catBreedItemInfo?.let {
-            feedAdapter.updateItem(it.id, catBreedItemInfo.isFavourite)
+        if (catBreedItemInfo == null) {
+            feedAdapter.updateItem(currentDetailPosition, false) // removed from favorite
+        } else {
+            feedAdapter.updateItem(currentDetailPosition, catBreedItemInfo.isFavourite)
         }
     }
 
@@ -170,13 +172,15 @@ class HomeFeedFragment : BaseFragment<FragmentHomeFeedBinding, HomeFeedFragmentC
         viewModel.addToFavourite(favourite)
     }
 
-    private fun openDetailFragment(feedItem: CatBreedItemInfo) {
-        currentDetailId = feedItem.breedId
-        callback?.openDetailFragment(feedItem.breedId, feedItem.isFavourite)
+    fun updateFavorite() {
+        if (currentDetailId.isNullOrBlank()) return
+        viewModel.getFavoriteBreed(currentDetailId!!)
     }
 
-    override fun handleBackPressed() {
-        // do nothing
+    private fun openDetailFragment(position: Int, feedItem: CatBreedItemInfo) {
+        this.currentDetailPosition = position
+        currentDetailId = feedItem.breedId
+        callback?.openDetailFragment(feedItem.breedId, feedItem.isFavourite)
     }
 
     companion object {

@@ -1,7 +1,5 @@
 package com.pandey.shubham.katty.core.base
 
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.IdRes
@@ -12,6 +10,7 @@ import androidx.viewbinding.ViewBinding
 import com.pandey.shubham.katty.R
 import com.pandey.shubham.katty.core.utils.shouldInterceptBackPress
 import com.pandey.shubham.katty.core.utils.updateFragment
+
 
 /**
  * Created by shubhampandey
@@ -30,7 +29,6 @@ abstract class BaseActivity<VB: ViewBinding>: AppCompatActivity() {
                 isEnabled = false
                 onBackPressedDispatcher.onBackPressed()
             }
-            handleBackPressed()
         }
     }
 
@@ -40,6 +38,15 @@ abstract class BaseActivity<VB: ViewBinding>: AppCompatActivity() {
         _binding = viewBinding()
         setContentView(binding.root)
         onBackPressedDispatcher.addCallback(onBackCallback)
+        attachBackStackListener()
+    }
+
+    private fun attachBackStackListener() {
+        supportFragmentManager.run {
+            addOnBackStackChangedListener {
+                onBackStackUpdate()
+            }
+        }
     }
 
     fun openFragment(
@@ -63,5 +70,5 @@ abstract class BaseActivity<VB: ViewBinding>: AppCompatActivity() {
         _binding = null
     }
 
-    protected abstract fun handleBackPressed()
+    protected abstract fun onBackStackUpdate()
 }

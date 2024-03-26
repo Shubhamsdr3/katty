@@ -1,4 +1,4 @@
-package com.pandey.shubham.katty.features.search
+package com.pandey.shubham.katty.features.search.ui
 
 import android.content.Context
 import android.content.Intent
@@ -18,11 +18,11 @@ class SearchActivity: NetworkLoaderActivity()  {
 
     private fun loadFragment(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
-            openFragment(R.id.feed_container,  SearchFragment.newInstance(), true)
+            openFragment(R.id.feed_container, SearchFragment.newInstance(), true)
         }
     }
 
-    override fun handleBackPressed() {
+    override fun onBackStackUpdate() {
         // do nothing
     }
 
