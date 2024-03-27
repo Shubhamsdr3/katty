@@ -43,6 +43,7 @@ abstract class BaseFragment<VB: ViewBinding, T> : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         populateViews()
+        attachListeners()
     }
 
     protected fun onBackPressed() {
@@ -83,6 +84,8 @@ abstract class BaseFragment<VB: ViewBinding, T> : Fragment() {
     protected abstract fun viewBinding(inflater: LayoutInflater, container: ViewGroup?): VB
 
     protected abstract fun populateViews()
+
+    protected abstract fun attachListeners()
 
     override fun onDestroy() {
         super.onDestroy()

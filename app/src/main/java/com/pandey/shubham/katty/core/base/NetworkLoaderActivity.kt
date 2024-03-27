@@ -8,7 +8,7 @@ import com.pandey.shubham.katty.databinding.ActivityMainBinding
 /**
  * Created by shubhampandey
  */
-abstract class NetworkLoaderActivity: BaseActivity<ActivityMainBinding>() {
+abstract class NetworkLoaderActivity: com.pandey.shubham.katty.core.base.BaseActivity<ActivityMainBinding>() {
     override fun viewBinding() = ActivityMainBinding.inflate(layoutInflater)
 
     internal fun showLoader() {

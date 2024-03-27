@@ -6,7 +6,7 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.pandey.shubham.katty.BuildConfig
-import com.pandey.shubham.katty.core.network.FeedApiService
+import com.pandey.shubham.katty.core.FeedApiService
 import com.pandey.shubham.katty.core.utils.getAppContext
 import dagger.Module
 import dagger.Provides
@@ -35,7 +35,7 @@ class NetworkModule {
     fun provideRetrofit(okhttp: OkHttpClient, gson: Gson): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URL)
-//            .addCallAdapterFactory(CoroutineCallAdapterFactory())
+            .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(okhttp)
             .build()

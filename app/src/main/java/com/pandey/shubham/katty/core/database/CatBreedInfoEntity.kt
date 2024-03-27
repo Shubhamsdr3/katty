@@ -1,16 +1,14 @@
 package com.pandey.shubham.katty.core.database
 
 import androidx.room.Entity
-import androidx.room.Index
 import androidx.room.PrimaryKey
-import com.pandey.shubham.katty.features.feed.data.dtos.Weight
-import com.pandey.shubham.katty.features.feed.domain.model.CatBreedItemInfo
+import com.pandey.shubham.katty.feature.feed.data.dtos.Weight
+import com.pandey.shubham.katty.feature.feed.domain.model.CatBreedItemInfo
 
 /**
  * Created by shubhampandey
  */
 
-//@Entity("breed_info", indices = [Index(value = ["breedId"], unique = true)], primaryKeys = arrayOf("id", "breedId"))
 @Entity("breed_info")
 data class CatBreedInfoEntity(
     @PrimaryKey(autoGenerate = true)

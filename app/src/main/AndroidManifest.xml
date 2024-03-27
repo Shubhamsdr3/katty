@@ -18,7 +18,7 @@
         tools:targetApi="31">
 
         <activity
-            android:name=".features.feed.ui.HomeActivity"
+            android:name=".feature.feed.ui.HomeActivity"
             android:exported="true"
             android:theme="@style/Theme.Katty">
             <intent-filter>
@@ -29,7 +29,7 @@
 
         <activity
             android:launchMode="singleTop"
-            android:name="com.pandey.shubham.katty.features.search.ui.SearchActivity" />
+            android:name=".feature.search.ui.SearchActivity" />
 
     </application>
 

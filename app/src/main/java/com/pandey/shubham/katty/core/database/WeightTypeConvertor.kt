@@ -3,7 +3,7 @@ package com.pandey.shubham.katty.core.database
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.pandey.shubham.katty.core.utils.fromJson
-import com.pandey.shubham.katty.features.feed.data.dtos.Weight
+import com.pandey.shubham.katty.feature.feed.data.dtos.Weight
 
 
 /**
