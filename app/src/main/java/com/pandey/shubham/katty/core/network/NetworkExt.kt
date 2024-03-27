@@ -17,7 +17,7 @@ const val NETWORK_ERROR_UNKNOWN = "Something went wrong"
 suspend fun <T : Any> makeRequest(
     dispatcher: CoroutineDispatcher,
     apiCall: suspend () -> Response<T>
-): NetworkState<T?> {
+): NetworkState<T> {
     return withContext(dispatcher) {
         try {
             val response = withTimeout(NETWORK_TIMEOUT) { apiCall.invoke() } // throws TimeoutCancellationException

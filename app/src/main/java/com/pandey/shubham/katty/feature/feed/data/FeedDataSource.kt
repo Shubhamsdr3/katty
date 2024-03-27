@@ -12,6 +12,7 @@ import com.pandey.shubham.katty.core.utils.Utility
 import com.pandey.shubham.katty.feature.feed.data.dtos.CatBreedResponseItem
 import com.pandey.shubham.katty.feature.feed.domain.model.CatBreedItemInfo
 import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.delay
 
 /**
  * Created by shubhampandey
@@ -21,12 +22,13 @@ private const val TAG = "FeedDataSource"
 
 class FeedDataSource(
     private val apiService: FeedApiService,
-    private val appDatabase: AppDatabase
+    private val appDatabase: AppDatabase,
+    private val initialPage: Int = 1
 ) : PagingSource<Int, CatBreedItemInfo>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, CatBreedItemInfo> {
         try {
-            val position = params.key ?: 0
+            val position = params.key ?: initialPage
             val favouriteBreedList = appDatabase.cateInfoDao().getFavouriteBreeds()
             var hasNext = false
             var breedItemList: List<CatBreedItemInfo> = emptyList()
@@ -50,7 +52,7 @@ class FeedDataSource(
             }
             return LoadResult.Page(
                 data = breedItemList,
-                prevKey = if (position == 0) null else position.minus(1),
+                prevKey = if (position == initialPage) null else position.minus(1),
                 nextKey = if (!hasNext) null else position.plus(1)
             )
         } catch (ex: Exception) {

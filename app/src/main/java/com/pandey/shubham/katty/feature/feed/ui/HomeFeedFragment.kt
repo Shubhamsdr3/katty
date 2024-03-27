@@ -156,12 +156,7 @@ class HomeFeedFragment : BaseFragment<FragmentHomeFeedBinding, HomeFeedFragmentC
     private fun setFeedAdapter() {
         with(binding.rvFeed) {
             layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
-            val loadingStateAdapter = FeedLoadingAdapter { feedAdapter.retry() }
-            feedAdapter.addLoadStateListener { loadStates ->
-                loadingStateAdapter.loadState = loadStates.refresh
-                loadingStateAdapter.loadState = loadStates.append
-            }
-            adapter = ConcatAdapter(loadingStateAdapter, feedAdapter, loadingStateAdapter)
+            adapter = feedAdapter.withLoadStateFooter(FeedLoadingAdapter { feedAdapter.retry() })
             addItemDecoration(SpaceItemDecoration(resources.getDimensionPixelOffset(R.dimen.dimen32dp), RecyclerView.VERTICAL))
         }
     }

@@ -6,8 +6,9 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pandey.shubham.katty.core.network.NetworkState
+import com.pandey.shubham.katty.feature.detail.domain.model.CatDetailInfo
 import com.pandey.shubham.katty.feature.detail.domain.usecase.GetCatDetailUseCase
-import com.pandey.shubham.katty.feature.feed.data.dtos.CatBreedResponseItem
+import com.pandey.shubham.katty.feature.detail.ui.FeedItemDetailFragment.Companion.CAT_BREED_ID
 import com.pandey.shubham.katty.feature.feed.domain.model.CatBreedItemInfo
 import com.pandey.shubham.katty.feature.feed.domain.usecase.AddFavoriteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -34,16 +35,15 @@ class FeedDetailViewModel @Inject constructor(
     val feedDetailUiState: LiveData<FeedDetailUiState> = _feedDetailUiState
 
     init {
-//        val catBreedId = savedStateHandle.get<String>(CAT_BREED_ID)
-//        getCateDetail(catBreedId)
+        val catBreedId = savedStateHandle.get<String>(CAT_BREED_ID)
+        getCateDetail(catBreedId)
     }
 
     fun getCateDetail(catBreedId: String?) {
         _feedDetailUiState.value = FeedDetailUiState.ShowLoader
         detailUseCase(catBreedId).onEach { state ->
             when (state) {
-                is NetworkState.Error -> _feedDetailUiState.value =
-                    FeedDetailUiState.ShowError(state.throwable)
+                is NetworkState.Error -> _feedDetailUiState.value = FeedDetailUiState.ShowError(state.throwable)
                 is NetworkState.Success -> handleResponse(state.data)
             }
         }.launchIn(viewModelScope)
@@ -53,16 +53,11 @@ class FeedDetailViewModel @Inject constructor(
         addFavoriteUseCase(catBreedItemInfo.toBreedInfoEntity(), viewModelScope)
     }
 
-    private fun handleResponse(data: Any?) {
-        if (data == null) {
-            _feedDetailUiState.value =
-                FeedDetailUiState.ShowError(IOException("Something went wrong"))
-            return
-        }
-        if (data is CatBreedItemInfo) {
+    private fun handleResponse(data: CatDetailInfo?) {
+        if (data != null) {
             _feedDetailUiState.value = FeedDetailUiState.ShowFeedDetail(data)
-        } else if (data is CatBreedResponseItem) {
-            _feedDetailUiState.value = FeedDetailUiState.ShowFeedDetail(data.toCatBreedItem())
+        } else {
+            _feedDetailUiState.value = FeedDetailUiState.ShowError(IOException("Something went wrong"))
         }
     }
 }

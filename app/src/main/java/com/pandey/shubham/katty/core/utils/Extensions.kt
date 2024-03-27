@@ -1,6 +1,10 @@
 package com.pandey.shubham.katty.core.utils
 
 import android.content.Context
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import android.view.ViewParent
+import androidx.viewbinding.ViewBinding
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.pandey.shubham.katty.KattyApp
@@ -26,3 +30,6 @@ fun IOScope() = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
 
 public fun DefaultScope() = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+
+
+fun ViewGroup.inflater() = LayoutInflater.from(context)

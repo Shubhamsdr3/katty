@@ -3,18 +3,19 @@ package com.pandey.shubham.katty.feature.search.ui
 import android.view.ViewGroup
 import com.pandey.shubham.katty.core.base.BaseAdapter
 import com.pandey.shubham.katty.core.base.BaseViewHolder
-import com.pandey.shubham.katty.databinding.ItemSearchSuggestionBinding
+import com.pandey.shubham.katty.core.utils.inflater
+import com.pandey.shubham.katty.databinding.ItemSearchResultBinding
 import com.pandey.shubham.katty.feature.search.data.SearchSuggestion
 
 /**
  * Created by shubhampandey
  */
-class SearchAdapter: BaseAdapter<SearchSuggestion, ItemSearchSuggestionBinding>() {
+class SearchAdapter(
+    private val dataset: List<SearchSuggestion>
+) : BaseAdapter<SearchSuggestion, ItemSearchResultBinding>(dataset) {
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): BaseViewHolder<SearchSuggestion, ItemSearchSuggestionBinding> {
-        TODO("Not yet implemented")
+    override fun viewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<SearchSuggestion, ItemSearchResultBinding> {
+        val itemBinding = ItemSearchResultBinding.inflate(parent.inflater(), parent, false)
+        return SearchItemViewHolder(itemBinding)
     }
 }

@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SnapHelper
 import com.bumptech.glide.Glide
 import com.pandey.shubham.katty.R
 
@@ -42,9 +43,6 @@ fun AppCompatImageView.setDrawable(@DrawableRes resId: Int) {
     this.visible()
 }
 
-inline fun <reified T> FragmentActivity.getTopFragment(): T?
-        = supportFragmentManager.fragments.firstOrNull()?.let { it as? T }
-
 inline fun FragmentManager.updateFragment(fragment: Fragment, allowStateLoss: Boolean = false, body: FragmentTransaction.() -> Unit) {
     val transaction = beginTransaction()
     val topFragment = findFragmentByTag(fragment::class.java.simpleName)
@@ -64,11 +62,16 @@ inline fun RecyclerView.ViewHolder.absoluteAdapterPosition(callback: (Int) -> Un
     if (position != RecyclerView.NO_POSITION) callback(position)
 }
 
-
 fun onAfterTextChange(block: (CharSequence?) -> Unit) = object : TextWatcher{
     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
     override fun afterTextChanged(s: Editable?) {
         block(s)
     }
+}
+
+fun SnapHelper.getSnapPosition(recyclerView: RecyclerView): Int {
+    val layoutManager = recyclerView.layoutManager ?: return RecyclerView.NO_POSITION
+    val snapView = findSnapView(layoutManager) ?: return RecyclerView.NO_POSITION
+    return layoutManager.getPosition(snapView)
 }

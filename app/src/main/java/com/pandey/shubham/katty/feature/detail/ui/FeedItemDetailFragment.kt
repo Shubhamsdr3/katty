@@ -9,8 +9,9 @@ import com.pandey.shubham.katty.core.base.BaseFragment
 import com.pandey.shubham.katty.core.failure.model.ErrorMessage
 import com.pandey.shubham.katty.core.utils.Callback
 import com.pandey.shubham.katty.core.utils.setDrawable
-import com.pandey.shubham.katty.core.utils.setNetworkImage
 import com.pandey.shubham.katty.databinding.FragmentFeedItemDetailBinding
+import com.pandey.shubham.katty.feature.detail.data.CatImageResponseItem
+import com.pandey.shubham.katty.feature.detail.domain.model.CatDetailInfo
 import com.pandey.shubham.katty.feature.feed.domain.model.CatBreedItemInfo
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -52,14 +53,11 @@ class FeedItemDetailFragment : BaseFragment<FragmentFeedItemDetailBinding, Callb
         viewModel.feedDetailUiState.observe(viewLifecycleOwner) { onFeedDetailUiStateChange(it) }
     }
 
-    private fun onFeedDetailUiStateChange(state: FeedDetailUiState?) {
+    private fun onFeedDetailUiStateChange(state: FeedDetailUiState) {
         when(state) {
             is FeedDetailUiState.ShowLoader -> showLoader()
             is FeedDetailUiState.ShowError -> handleError(state.throwable)
-            is FeedDetailUiState.ShowFeedDetail -> showFeedDetail(state.feedItem)
-            else -> {
-                // do nothing
-            }
+            is FeedDetailUiState.ShowFeedDetail -> showFeedDetail(state.detailInfo)
         }
     }
 
@@ -70,16 +68,24 @@ class FeedItemDetailFragment : BaseFragment<FragmentFeedItemDetailBinding, Callb
         }
     }
 
-    private fun showFeedDetail(detail: CatBreedItemInfo?) {
+    private fun showFeedDetail(detail: CatDetailInfo?) {
         hideLoader()
-        detail?.run {
-            catBreedItemInfo = detail
-            binding.ivFeedDetail.setNetworkImage(imageUrl)
+        val catInfo = detail?.breedItemInfo
+        catInfo?.run {
+            catBreedItemInfo = catInfo
             binding.tvName.text = requireContext().getString(R.string.txt_name, name ?: "")
             binding.tvOrigin.text = requireContext().getString(R.string.txt_origin, origin)
             binding.tvTemperament.text = requireContext().getString(R.string.txt_temperament, temperament)
             binding.tvDescription.text = requireContext().getString(R.string.txt_description, description)
             toggleFavourite(isFavourite)
+            showImages(detail.images)
+        }
+    }
+
+    private fun showImages(images: List<CatImageResponseItem>?) {
+        if (!images.isNullOrEmpty()) {
+            val imageUrls = images.mapNotNull { it.url }
+            binding.imageCarousel.setData(imageUrls)
         }
     }
 

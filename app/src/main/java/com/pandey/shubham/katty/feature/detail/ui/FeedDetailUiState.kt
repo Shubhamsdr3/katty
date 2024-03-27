@@ -1,6 +1,6 @@
 package com.pandey.shubham.katty.feature.detail.ui
 
-import com.pandey.shubham.katty.feature.feed.domain.model.CatBreedItemInfo
+import com.pandey.shubham.katty.feature.detail.domain.model.CatDetailInfo
 
 /**
  * Created by shubhampandey
@@ -11,5 +11,5 @@ sealed class FeedDetailUiState {
 
     data class ShowError(val throwable: Throwable?): FeedDetailUiState()
 
-    data class ShowFeedDetail(val feedItem: CatBreedItemInfo?): FeedDetailUiState()
+    data class ShowFeedDetail(val detailInfo: CatDetailInfo?): FeedDetailUiState()
 }

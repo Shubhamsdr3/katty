@@ -18,14 +18,13 @@
             app:layout_constraintTop_toTopOf="parent"
             app:navigationIcon="@drawable/icon_arrow_back_24" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_feed_detail"
+        <com.pandey.shubham.katty.core.widgets.ImageCarouselWidget
+            android:id="@+id/image_carousel"
             android:layout_width="@dimen/dimen240dp"
             android:layout_height="@dimen/dimen240dp"
             android:scaleType="fitXY"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/feed_detail_toolbar"
-            tools:srcCompat="@drawable/ic_launcher_background" />
+            app:layout_constraintTop_toBottomOf="@+id/feed_detail_toolbar" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_favourite"
@@ -35,8 +34,8 @@
             android:layout_marginBottom="@dimen/dimen24dp"
             android:scaleType="fitCenter"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_feed_detail"
-            app:layout_constraintEnd_toEndOf="@id/iv_feed_detail"
+            app:layout_constraintBottom_toBottomOf="@+id/image_carousel"
+            app:layout_constraintEnd_toEndOf="@id/image_carousel"
             app:srcCompat="@drawable/icon_heart_outlined_24"
             tools:visibility="visible" />
 
@@ -46,8 +45,8 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/dimen8dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/iv_feed_detail"
-            app:layout_constraintTop_toTopOf="@id/iv_feed_detail" />
+            app:layout_constraintStart_toEndOf="@+id/image_carousel"
+            app:layout_constraintTop_toTopOf="@id/image_carousel" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_origin"
@@ -55,7 +54,7 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/dimen8dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/iv_feed_detail"
+            app:layout_constraintStart_toEndOf="@+id/image_carousel"
             app:layout_constraintTop_toBottomOf="@+id/tv_name" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -64,7 +63,7 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/dimen8dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/iv_feed_detail"
+            app:layout_constraintStart_toEndOf="@+id/image_carousel"
             app:layout_constraintTop_toBottomOf="@+id/tv_origin" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -73,7 +72,7 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/dimen8dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/iv_feed_detail"
+            app:layout_constraintStart_toEndOf="@+id/image_carousel"
             app:layout_constraintTop_toBottomOf="@+id/tv_temperament" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -82,7 +81,7 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/dimen8dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/iv_feed_detail"
+            app:layout_constraintStart_toEndOf="@+id/image_carousel"
             app:layout_constraintTop_toBottomOf="@+id/tv_temperament" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
