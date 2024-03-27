@@ -50,7 +50,8 @@ class FeedItemDetailFragment : BaseFragment<FragmentFeedItemDetailBinding, Callb
     }
 
     private fun attachObserver() {
-        viewModel.getCateDetail(cateBreedId)
+//        viewModel.getCateDetail(cateBreedId)
+//        viewModel.setDetailId(cateBreedId)
         viewModel.feedDetailUiState.observe(viewLifecycleOwner) { onFeedDetailUiStateChange(it) }
     }
 
@@ -95,7 +96,7 @@ class FeedItemDetailFragment : BaseFragment<FragmentFeedItemDetailBinding, Callb
 
     companion object {
 
-        private const val CAT_BREED_ID = "cat_breed_id"
+        const val CAT_BREED_ID = "cat_breed_id"
         private const val IS_FAVOURITE = "is_favourite"
 
         fun newInstance(catBreedId: String?, isFavourite: Boolean) = FeedItemDetailFragment().apply {

@@ -18,7 +18,7 @@ class SearchActivity: NetworkLoaderActivity()  {
 
     private fun loadFragment(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
-            openFragment(R.id.feed_container, SearchFragment.newInstance(), true)
+            openFragment(R.id.feed_container, SearchFragment.newInstance())
         }
     }
 

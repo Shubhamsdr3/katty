@@ -33,7 +33,7 @@ abstract class BaseActivity<VB: ViewBinding>: AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        window.statusBarColor = ContextCompat.getColor(this, R.color.color_secondary)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.color_tertiary)
         super.onCreate(savedInstanceState)
         _binding = viewBinding()
         setContentView(binding.root)

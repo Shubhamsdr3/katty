@@ -87,7 +87,7 @@ class HomeFeedFragment : BaseFragment<FragmentHomeFeedBinding, HomeFeedFragmentC
     }
 
     private fun attachObserver() {
-        viewModel.fetchFeedDataPaginated().observe(viewLifecycleOwner) {
+        viewModel.fetchFeedDataPaginated.observe(viewLifecycleOwner) {
             feedAdapter.submitData(lifecycle, it)
         }
 

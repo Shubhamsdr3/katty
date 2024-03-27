@@ -5,9 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.pandey.shubham.katty.features.feed.data.repository.FeedRepositoryImpl
 import com.pandey.shubham.katty.features.feed.domain.model.CatBreedItemInfo
+import com.pandey.shubham.katty.features.feed.domain.usecase.AddFavoriteUseCase
+import com.pandey.shubham.katty.features.feed.domain.usecase.GetFavouriteUseCase
+import com.pandey.shubham.katty.features.feed.domain.usecase.GetFeedDataUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -18,20 +22,24 @@ import javax.inject.Inject
  */
 
 @HiltViewModel
-class HomeFeedViewModel @Inject constructor(private val repository: FeedRepositoryImpl): ViewModel() {
+class HomeFeedViewModel @Inject constructor(
+    getFeedDataUseCase: GetFeedDataUseCase,
+    private val addFavoriteUseCase: AddFavoriteUseCase,
+    private val getFavouriteUseCase: GetFavouriteUseCase
+): ViewModel() {
 
     private val _homeUiState: MutableLiveData<HomeUiState> = MutableLiveData()
     val homeUiState: LiveData<HomeUiState> = _homeUiState
-    fun fetchFeedDataPaginated() = repository.getCatImagesPaginated().cachedIn(viewModelScope).asLiveData()
+
+    val fetchFeedDataPaginated = getFeedDataUseCase.invoke().cachedIn(viewModelScope)
+
     fun addToFavourite(favourite: CatBreedItemInfo) {
-        viewModelScope.launch {
-            repository.updateFavorite(favourite.toBreedInfoEntity())
-        }
+        addFavoriteUseCase(favourite.toBreedInfoEntity())
     }
 
     fun getFavoriteBreed(breedId: String) {
         viewModelScope.launch {
-            repository.getFavouriteFromDb(breedId).collectLatest {
+            getFavouriteUseCase(breedId).collectLatest {
                 _homeUiState.value = HomeUiState.OnFavoriteEvent(it)
             }
         }

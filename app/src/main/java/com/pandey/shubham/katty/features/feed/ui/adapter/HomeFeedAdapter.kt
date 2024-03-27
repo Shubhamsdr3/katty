@@ -13,6 +13,7 @@ import com.pandey.shubham.katty.databinding.ItemFeedViewBinding
 import com.pandey.shubham.katty.features.feed.domain.model.CatBreedItemInfo
 import com.pandey.shubham.katty.features.feed.ui.viewholders.FeedItemViewHolder
 import com.pandey.shubham.katty.core.utils.absoluteAdapterPosition
+import com.pandey.shubham.katty.core.utils.isInRange
 
 /**
  * Created by shubhampandey
@@ -49,7 +50,9 @@ class HomeFeedAdapter(
     }
 
     private inline fun getItem(position: Int, block: (CatBreedItemInfo) -> Unit) {
-        getItem(position)?.let(block)
+        if (position.isInRange(itemCount)) {
+            getItem(position)?.let(block)
+        }
     }
 
     override fun onBindViewHolder(holder: FeedItemViewHolder, position: Int) {

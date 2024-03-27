@@ -12,5 +12,5 @@ abstract class UseCase<in T, out R> where R: Any {
 
     abstract fun run(param: T?, scope: CoroutineScope): R
 
-    operator fun invoke(params: T?, scope: CoroutineScope = DefaultScope()): R = run(params, scope)
+    operator fun invoke(params: T? = null, scope: CoroutineScope = DefaultScope()): R = run(params, scope)
 }

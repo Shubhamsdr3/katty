@@ -2,6 +2,7 @@ package com.pandey.shubham.katty.features.feed.data.repository
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import androidx.paging.liveData
 import com.pandey.shubham.katty.core.database.AppDatabase
 import com.pandey.shubham.katty.core.database.CatBreedInfoEntity
 import com.pandey.shubham.katty.core.network.FeedApiService
@@ -24,10 +25,12 @@ class FeedRepositoryImpl @Inject constructor(
     private val appDatabase: AppDatabase
 ): FeedRepository {
 
-    override fun getCatImagesPaginated() = Pager(
+    private val pager = Pager(
         config = getDefaultConfig(),
         pagingSourceFactory = { FeedDataSource(apiService, appDatabase) },
-    ).flow
+    )
+
+    override fun getCatImagesPaginated() = pager.liveData
 
     private fun getDefaultConfig() =
         PagingConfig(

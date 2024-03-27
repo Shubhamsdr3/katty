@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.Flow
  */
 interface FeedRepository {
 
-    fun getCatImagesPaginated(): Flow<PagingData<CatBreedItemInfo>>
+    fun getCatImagesPaginated(): LiveData<PagingData<CatBreedItemInfo>>
 
     suspend fun updateFavorite(catBreedItemInfo: CatBreedInfoEntity)
 

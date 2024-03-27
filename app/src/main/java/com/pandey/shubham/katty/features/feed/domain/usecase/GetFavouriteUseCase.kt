@@ -4,18 +4,14 @@ import com.pandey.shubham.katty.core.base.UseCase
 import com.pandey.shubham.katty.core.database.CatBreedInfoEntity
 import com.pandey.shubham.katty.features.feed.data.repository.FeedRepository
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 /**
  * Created by shubhampandey
  */
-class AddFavoriteUseCase @Inject constructor (private val repository: FeedRepository): UseCase<CatBreedInfoEntity, Unit>() {
-    override fun run(param: CatBreedInfoEntity?, scope: CoroutineScope) {
-        scope.launch {
-            param?.let {
-                repository.updateFavorite(param)
-            }
-        }
-    }
+class GetFavouriteUseCase @Inject constructor(
+    private val repository: FeedRepository
+) : UseCase<String, Flow<CatBreedInfoEntity?>>() {
+    override fun run(param: String?, scope: CoroutineScope): Flow<CatBreedInfoEntity?> = repository.getFavouriteFromDb(param)
 }

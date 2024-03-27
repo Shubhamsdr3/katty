@@ -11,15 +11,15 @@ import kotlinx.coroutines.SupervisorJob
 /**
  * Created by shubhampandey
  */
-fun getAppContext(block: (Context) -> Unit) {
-    KattyApp.getAppContext()?.let {
-        block(it)
-    }
+inline fun getAppContext(block: (Context) -> Unit) {
+    KattyApp.getAppContext()?.let { block(it) }
 }
 
 inline fun <reified T> Gson.fromJson(json: String?): T? {
     return fromJson(json, object : TypeToken<T>() {}.type)
 }
+
+fun Int.isInRange(range: Int) = this in 0..< range
 
 // coroutines
 fun IOScope() = CoroutineScope(Dispatchers.IO + SupervisorJob())

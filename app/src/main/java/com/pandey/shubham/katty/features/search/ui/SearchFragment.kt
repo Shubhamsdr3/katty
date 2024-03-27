@@ -15,6 +15,7 @@ class SearchFragment: BaseFragment<FragmentSearchBinding, Callback>() {
     }
 
     override fun populateViews() {
+        binding.searchToolbar.setNavigationOnClickListener { onBackPressed() }
         binding.etSearch.onTextChanged(lifecycle) {
             //
         }

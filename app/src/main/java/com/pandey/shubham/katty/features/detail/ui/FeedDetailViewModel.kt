@@ -2,20 +2,18 @@ package com.pandey.shubham.katty.features.detail.ui
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pandey.shubham.katty.core.network.NetworkState
-import com.pandey.shubham.katty.core.network.getResult
-import com.pandey.shubham.katty.features.detail.domain.model.CatDetailInfo
-import com.pandey.shubham.katty.features.detail.domain.usecase.GetCatImageUseCase
+import com.pandey.shubham.katty.features.detail.domain.usecase.GetCatDetailUseCase
+import com.pandey.shubham.katty.features.detail.ui.FeedItemDetailFragment.Companion.CAT_BREED_ID
 import com.pandey.shubham.katty.features.feed.data.dtos.CatBreedResponseItem
 import com.pandey.shubham.katty.features.feed.domain.model.CatBreedItemInfo
 import com.pandey.shubham.katty.features.feed.domain.usecase.AddFavoriteUseCase
-import com.pandey.shubham.katty.features.detail.domain.usecase.GetCatDetailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.zip
 import java.io.IOException
 import javax.inject.Inject
 
@@ -30,10 +28,16 @@ import javax.inject.Inject
 class FeedDetailViewModel @Inject constructor(
     private val detailUseCase: GetCatDetailUseCase,
     private val addFavoriteUseCase: AddFavoriteUseCase,
+    savedStateHandle: SavedStateHandle
 ): ViewModel() {
 
     private val _feedDetailUiState: MutableLiveData<FeedDetailUiState> = MutableLiveData()
     val feedDetailUiState: LiveData<FeedDetailUiState> = _feedDetailUiState
+
+    init {
+        val catBreedId = savedStateHandle.get<String>(CAT_BREED_ID)
+        getCateDetail(catBreedId)
+    }
 
     fun getCateDetail(catBreedId: String?) {
         detailUseCase(catBreedId).onEach { state ->

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_feed"
+            android:layout_width="@dimen/dimen200dp"
+            android:layout_height="@dimen/dimen200dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_launcher_background" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_favourite"
+            android:layout_width="@dimen/dimen32dp"
+            android:layout_height="@dimen/dimen32dp"
+            android:layout_marginEnd="@dimen/dimen16dp"
+            android:layout_marginBottom="@dimen/dimen16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_feed"
+            app:layout_constraintEnd_toEndOf="@+id/iv_feed"
+            app:srcCompat="@drawable/icon_heart_outlined_24" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_name"
+            android:layout_width="@dimen/dimen0dp"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dimen8dp"
+            tools:text="Title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_feed"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_origin"
+            android:layout_width="@dimen/dimen0dp"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dimen8dp"
+            tools:text="This is subtitle"
+            app:layout_constraintStart_toEndOf="@+id/iv_feed"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_temperament"
+            android:layout_width="@dimen/dimen0dp"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dimen8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_feed"
+            app:layout_constraintTop_toBottomOf="@+id/tv_origin" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_nickname"
+            android:layout_width="@dimen/dimen0dp"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dimen8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_feed"
+            app:layout_constraintTop_toBottomOf="@+id/tv_temperament" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
