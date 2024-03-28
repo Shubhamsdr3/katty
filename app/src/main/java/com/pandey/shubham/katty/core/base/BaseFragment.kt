@@ -26,6 +26,9 @@ abstract class BaseFragment<VB: ViewBinding, T> : Fragment() {
 
     protected val callback: T? get() = _callback
 
+    private var snackbar: Snackbar? = null
+
+    @Suppress("UNCHECKED_CAST")
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (parentFragment != null) {
@@ -75,10 +78,22 @@ abstract class BaseFragment<VB: ViewBinding, T> : Fragment() {
         actionText: String,
         action: () -> Any
     ) {
-        val snackBar = Snackbar.make(binding.root, message, Snackbar.LENGTH_INDEFINITE)
-        snackBar.setAction(actionText) { _ -> action.invoke() }
-        snackBar.setActionTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-        snackBar.show()
+        snackbar = Snackbar.make(binding.root, message, Snackbar.LENGTH_INDEFINITE).apply {
+            setAction(actionText) { _ -> action.invoke() }
+            setActionTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+            show()
+        }
+    }
+
+    internal fun showSnackBar(message: String, showTime: Int = Snackbar.LENGTH_SHORT) {
+        snackbar = Snackbar.make(binding.root, message, showTime).apply {
+            setActionTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+            show()
+        }
+    }
+
+    internal fun hideActionSnackBar() {
+        snackbar?.dismiss()
     }
 
     protected abstract fun viewBinding(inflater: LayoutInflater, container: ViewGroup?): VB

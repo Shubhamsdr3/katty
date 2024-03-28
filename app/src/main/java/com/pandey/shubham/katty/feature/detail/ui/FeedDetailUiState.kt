@@ -12,4 +12,6 @@ sealed class FeedDetailUiState {
     data class ShowError(val throwable: Throwable?): FeedDetailUiState()
 
     data class ShowFeedDetail(val detailInfo: CatDetailInfo?): FeedDetailUiState()
+
+    data class OnFavouriteEvent(val isSuccess: Boolean, val error: String? = null): FeedDetailUiState()
 }

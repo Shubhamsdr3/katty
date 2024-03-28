@@ -10,7 +10,8 @@ import javax.inject.Inject
 /**
  * Created by shubhampandey
  */
-class GetFavouriteUseCase @Inject constructor(
+class
+GetFavouriteUseCase @Inject constructor(
     private val repository: FeedRepository
 ) : UseCase<String, Flow<CatBreedInfoEntity?>>() {
     override fun run(param: String?, scope: CoroutineScope): Flow<CatBreedInfoEntity?> = repository.getFavouriteFromDb(param)

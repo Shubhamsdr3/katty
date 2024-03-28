@@ -8,6 +8,7 @@ import com.pandey.shubham.katty.R
 import com.pandey.shubham.katty.core.base.BaseFragment
 import com.pandey.shubham.katty.core.failure.model.ErrorMessage
 import com.pandey.shubham.katty.core.utils.Callback
+import com.pandey.shubham.katty.core.utils.ERROR_ADDING_FAVOURITE
 import com.pandey.shubham.katty.core.utils.setDrawable
 import com.pandey.shubham.katty.databinding.FragmentFeedItemDetailBinding
 import com.pandey.shubham.katty.feature.detail.data.CatImageResponseItem
@@ -58,7 +59,12 @@ class FeedItemDetailFragment : BaseFragment<FragmentFeedItemDetailBinding, Callb
             is FeedDetailUiState.ShowLoader -> showLoader()
             is FeedDetailUiState.ShowError -> handleError(state.throwable)
             is FeedDetailUiState.ShowFeedDetail -> showFeedDetail(state.detailInfo)
+            is FeedDetailUiState.OnFavouriteEvent -> onFavoriteEvent(state.isSuccess, state.error)
         }
+    }
+
+    private fun onFavoriteEvent(success: Boolean, error: String?) {
+        if (!success) { showSnackBar(error ?: ERROR_ADDING_FAVOURITE) }
     }
 
     private fun handleError(throwable: Throwable?) {

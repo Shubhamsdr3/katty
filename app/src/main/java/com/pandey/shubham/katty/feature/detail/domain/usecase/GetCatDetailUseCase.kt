@@ -1,14 +1,10 @@
 package com.pandey.shubham.katty.feature.detail.domain.usecase
 
-import android.util.Log
 import com.pandey.shubham.katty.core.base.UseCase
 import com.pandey.shubham.katty.core.failure.NoDataAvailableException
 import com.pandey.shubham.katty.core.network.NetworkState
-import com.pandey.shubham.katty.core.network.getNetworkResult
-import com.pandey.shubham.katty.feature.detail.data.CatImageResponseItem
 import com.pandey.shubham.katty.feature.detail.domain.model.CatDetailInfo
 import com.pandey.shubham.katty.feature.feed.data.repository.FeedRepository
-import com.pandey.shubham.katty.feature.feed.domain.model.CatBreedItemInfo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -29,7 +25,6 @@ class GetCatDetailUseCase @Inject constructor(
         } else {
             null
         }
-        Log.d("FeedRepositoryImpl", "The image response: ${imageResponse}")
         val localData = repository.getFavouriteFromDb(param).first()
         if (localData != null) {
             val cateDetail = CatDetailInfo(localData.toCatBreedItem(), images)

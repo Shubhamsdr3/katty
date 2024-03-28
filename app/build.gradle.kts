@@ -72,18 +72,21 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
 
-    // testing
-    testImplementation("io.kotest:kotest-runner-junit5:5.6.2")
-    testImplementation("io.kotest:kotest-assertions-core:5.6.2")
-    testImplementation("io.kotest:kotest-property:5.6.2")
-    testImplementation("org.robolectric:robolectric:4.10.3")
+    // Testing
+    testImplementation("androidx.arch.core:core-testing:2.2.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.0")
+
+    //robo-electric
+    testImplementation("org.robolectric:robolectric:4.10.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     testImplementation("io.mockk:mockk:1.13.5")
     testImplementation("app.cash.turbine:turbine:1.1.0")
-    testImplementation("com.google.truth:truth:1.1")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.1-Beta")
+
+    // truth
+    testImplementation("com.google.truth:truth:1.1.3")
+    androidTestImplementation("com.google.truth:truth:1.1.3")
 
     // room
     implementation("androidx.room:room-runtime:2.6.1")

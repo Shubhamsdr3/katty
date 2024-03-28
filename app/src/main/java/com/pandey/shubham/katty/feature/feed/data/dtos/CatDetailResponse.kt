@@ -7,4 +7,4 @@ import kotlinx.parcelize.Parcelize
 
 @Keep
 @Parcelize
-class CatBreedResponse : ArrayList<CatBreedResponseItem>(), Parcelable
+class CatDetailResponse : ArrayList<CatDetailItemResponse>(), Parcelable

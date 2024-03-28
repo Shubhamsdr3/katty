@@ -9,14 +9,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.paging.LoadState
-import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pandey.shubham.katty.R
 import com.pandey.shubham.katty.core.base.BaseFragment
 import com.pandey.shubham.katty.core.database.CatBreedInfoEntity
 import com.pandey.shubham.katty.core.failure.model.ErrorMessage
+import com.pandey.shubham.katty.core.utils.ERROR_ADDING_FAVOURITE
 import com.pandey.shubham.katty.core.utils.SpaceItemDecoration
 import com.pandey.shubham.katty.core.utils.Utility
 import com.pandey.shubham.katty.core.utils.gone
@@ -91,16 +90,16 @@ class HomeFeedFragment : BaseFragment<FragmentHomeFeedBinding, HomeFeedFragmentC
 
         lifecycleScope.launch {
             feedAdapter.loadStateFlow.collectLatest { loadStates ->
-                when(loadStates.refresh) {
-                    is LoadState.Loading -> handleLoader()
-                    is LoadState.Error -> handleError(ErrorMessage(errorMessage = (loadStates.refresh as LoadState.Error).error.message))
-                    is LoadState.NotLoading -> handleIdleState()
-                }
+                viewModel.onLoadingStateUpdate(loadStates)
             }
         }
         viewModel.homeUiState.observe(viewLifecycleOwner) { state ->
             when(state) {
-                is HomeUiState.OnFavoriteEvent -> updateFavouriteItem(state.catBreedItemEntity)
+                is HomeUiState.ShowLoader -> handleLoader()
+                is HomeUiState.ShowError -> handleError(state.error)
+                is HomeUiState.OnNotLoading -> handleIdleState()
+                is HomeUiState.UpdateFavorite -> updateFavouriteItem(state.catBreedItemEntity)
+                is HomeUiState.OnFavouriteUpdated -> onFavoriteUpdated(state.isSuccess, state.error)
                 else -> {
                     // do nothing
                 }
@@ -108,12 +107,13 @@ class HomeFeedFragment : BaseFragment<FragmentHomeFeedBinding, HomeFeedFragmentC
         }
     }
 
+    private fun onFavoriteUpdated(success: Boolean, error: String?) {
+        if (!success) showSnackBar(error ?: ERROR_ADDING_FAVOURITE)
+    }
+
     private fun updateFavouriteItem(catBreedItemInfo: CatBreedInfoEntity?) {
-        if (catBreedItemInfo == null) {
-            feedAdapter.updateItem(currentDetailPosition, false) // removed from favorite
-        } else {
-            feedAdapter.updateItem(currentDetailPosition, catBreedItemInfo.isFavourite)
-        }
+        val addToFavorite = catBreedItemInfo != null // if null remove from favourite.
+        feedAdapter.updateItem(currentDetailPosition, addToFavorite)
     }
 
     private fun handleLoader() {
@@ -151,6 +151,7 @@ class HomeFeedFragment : BaseFragment<FragmentHomeFeedBinding, HomeFeedFragmentC
         hideError()
         binding.rvFeed.visible()
         binding.swipeRefresh.isRefreshing = false
+        hideActionSnackBar()
     }
 
     private fun setFeedAdapter() {

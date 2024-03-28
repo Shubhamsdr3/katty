@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.pandey.shubham.katty.core.network.NETWORK_ERROR_UNKNOWN
 import com.pandey.shubham.katty.core.network.NetworkState
 import com.pandey.shubham.katty.feature.detail.domain.model.CatDetailInfo
 import com.pandey.shubham.katty.feature.detail.domain.usecase.GetCatDetailUseCase
@@ -19,9 +20,6 @@ import javax.inject.Inject
 
 /**
  * Created by shubhampandey
- *
- * TODO:
- * 1. Get images for current breed.
  *
  */
 @HiltViewModel
@@ -50,14 +48,20 @@ class FeedDetailViewModel @Inject constructor(
     }
 
     fun addToFavourite(catBreedItemInfo: CatBreedItemInfo) {
-        addFavoriteUseCase(catBreedItemInfo.toBreedInfoEntity(), viewModelScope)
+        addFavoriteUseCase(catBreedItemInfo.toBreedInfoEntity()).onEach { state ->
+            val isSuccess = when(state) {
+                is NetworkState.Success -> true
+                is NetworkState.Error -> false
+            }
+            _feedDetailUiState.value = FeedDetailUiState.OnFavouriteEvent(isSuccess)
+        }.launchIn(viewModelScope)
     }
 
     private fun handleResponse(data: CatDetailInfo?) {
         if (data != null) {
             _feedDetailUiState.value = FeedDetailUiState.ShowFeedDetail(data)
         } else {
-            _feedDetailUiState.value = FeedDetailUiState.ShowError(IOException("Something went wrong"))
+            _feedDetailUiState.value = FeedDetailUiState.ShowError(IOException(NETWORK_ERROR_UNKNOWN))
         }
     }
 }

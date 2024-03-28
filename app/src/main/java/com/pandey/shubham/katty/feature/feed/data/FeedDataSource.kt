@@ -5,14 +5,14 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.pandey.shubham.katty.core.FeedApiService
 import com.pandey.shubham.katty.core.database.AppDatabase
+import com.pandey.shubham.katty.core.failure.NoDataAvailableException
 import com.pandey.shubham.katty.core.network.getNetworkResult
 import com.pandey.shubham.katty.core.network.makeRequest
 import com.pandey.shubham.katty.core.utils.DEFAULT_PAGE_SIZE
 import com.pandey.shubham.katty.core.utils.Utility
-import com.pandey.shubham.katty.feature.feed.data.dtos.CatBreedResponseItem
+import com.pandey.shubham.katty.feature.feed.data.dtos.CatDetailItemResponse
 import com.pandey.shubham.katty.feature.feed.domain.model.CatBreedItemInfo
 import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.delay
 
 /**
  * Created by shubhampandey
@@ -39,7 +39,7 @@ class FeedDataSource(
                 }
                 networkState.getNetworkResult(
                     onSuccess = { response ->
-                        val feedItems = response as? ArrayList<CatBreedResponseItem>
+                        val feedItems = response as? ArrayList<CatDetailItemResponse>
                         hasNext = !feedItems.isNullOrEmpty()
                         breedItemList = feedItems?.map { it.toCatBreedItem(favouriteIdList.contains(it.breedId)) } ?: emptyList()
                     } , onError = {
@@ -50,11 +50,15 @@ class FeedDataSource(
             } else {
                 breedItemList = favouriteBreedList.map { it.toCatBreedItem() }
             }
-            return LoadResult.Page(
-                data = breedItemList,
-                prevKey = if (position == initialPage) null else position.minus(1),
-                nextKey = if (!hasNext) null else position.plus(1)
-            )
+            return if (!breedItemList.isEmpty()) {
+                LoadResult.Page(
+                    data = breedItemList,
+                    prevKey = if (position == initialPage) null else position.minus(1),
+                    nextKey = if (!hasNext) null else position.plus(1)
+                )
+            } else {
+                LoadResult.Error(NoDataAvailableException())
+            }
         } catch (ex: Exception) {
             Log.e(TAG, ex.toString())
             return LoadResult.Error(ex)

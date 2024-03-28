@@ -9,16 +9,13 @@ import com.pandey.shubham.katty.core.database.AppDatabase
 import com.pandey.shubham.katty.core.database.CatBreedInfoEntity
 import com.pandey.shubham.katty.core.failure.InvalidIdException
 import com.pandey.shubham.katty.core.network.NetworkState
-import com.pandey.shubham.katty.core.network.getNetworkResult
 import com.pandey.shubham.katty.core.network.makeRequest
 import com.pandey.shubham.katty.core.utils.DEFAULT_PAGE_SIZE
 import com.pandey.shubham.katty.core.utils.MAX_CACHED_ITEMS
 import com.pandey.shubham.katty.feature.detail.data.CatImageResponse
 import com.pandey.shubham.katty.feature.feed.data.FeedDataSource
-import com.pandey.shubham.katty.feature.feed.data.dtos.CatBreedResponseItem
+import com.pandey.shubham.katty.feature.feed.data.dtos.CatDetailItemResponse
 import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.withTimeout
-import java.io.IOException
 import javax.inject.Inject
 
 /**
@@ -35,7 +32,7 @@ class FeedRepositoryImpl @Inject constructor(
     private val defaultConfig get() = PagingConfig(
         pageSize = DEFAULT_PAGE_SIZE,
         maxSize = MAX_CACHED_ITEMS,
-        enablePlaceholders = false
+        prefetchDistance = DEFAULT_PAGE_SIZE, // to load items in advance.
     )
     private val pager
         get() = Pager(
@@ -45,17 +42,17 @@ class FeedRepositoryImpl @Inject constructor(
 
     override fun getCatImagesPaginated() = pager.liveData
 
-    override suspend fun updateFavorite(catBreedItemInfo: CatBreedInfoEntity) {
-        if (catBreedItemInfo.isFavourite) {
+    override suspend fun updateFavorite(catBreedItemInfo: CatBreedInfoEntity): Long {
+        return if (catBreedItemInfo.isFavourite) {
             appDatabase.cateInfoDao().addFavouriteBreed(catBreedItemInfo)
         } else {
-            appDatabase.cateInfoDao().removeFavorite(catBreedItemInfo.breedId)
+            appDatabase.cateInfoDao().removeFavorite(catBreedItemInfo.breedId).toLong()
         }
     }
 
     override fun getFavouriteFromDb(breedId: String?) = appDatabase.cateInfoDao().getFavouriteBreed(breedId)
 
-    override suspend fun getCatBreedDetail(catBreedId: String?): NetworkState<CatBreedResponseItem?> {
+    override suspend fun getCatBreedDetail(catBreedId: String?): NetworkState<CatDetailItemResponse?> {
         return try {
             if (catBreedId.isNullOrBlank()) throw InvalidIdException()
             makeRequest(IO) { apiService.getCatBreedDetail(catBreedId) }

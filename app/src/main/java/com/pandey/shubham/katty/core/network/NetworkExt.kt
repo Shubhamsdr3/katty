@@ -3,7 +3,6 @@ package com.pandey.shubham.katty.core.network
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.withContext
-import kotlinx.coroutines.withTimeout
 import retrofit2.HttpException
 import retrofit2.Response
 import java.io.IOException
@@ -12,7 +11,6 @@ import java.io.IOException
  * Created by shubhampandey
  */
 
-private const val NETWORK_TIMEOUT = 1000L
 const val NETWORK_ERROR_UNKNOWN = "Something went wrong"
 suspend fun <T : Any> makeRequest(
     dispatcher: CoroutineDispatcher,
@@ -20,7 +18,7 @@ suspend fun <T : Any> makeRequest(
 ): NetworkState<T> {
     return withContext(dispatcher) {
         try {
-            val response = withTimeout(NETWORK_TIMEOUT) { apiCall.invoke() } // throws TimeoutCancellationException
+            val response = apiCall.invoke()
             if (response.isSuccessful) {
                 NetworkState.Success(response.body())
             } else {
