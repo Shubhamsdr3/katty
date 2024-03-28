@@ -10,3 +10,4 @@ const val MAX_CACHED_ITEMS = 100
 const val NO_DATA_AVAILABLE = "data not available"
 const val INVALID_ID = "Invalid id"
 const val ERROR_ADDING_FAVOURITE = "Error adding favourite"
+const val NO_INTERNET_CONNECTION = "No internet connection"

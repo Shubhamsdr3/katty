@@ -3,6 +3,7 @@ package com.pandey.shubham.katty.feature.detail.domain.usecase
 import com.pandey.shubham.katty.core.base.UseCase
 import com.pandey.shubham.katty.core.failure.NoDataAvailableException
 import com.pandey.shubham.katty.core.network.NetworkState
+import com.pandey.shubham.katty.core.network.getNetworkResult
 import com.pandey.shubham.katty.feature.detail.domain.model.CatDetailInfo
 import com.pandey.shubham.katty.feature.feed.data.repository.FeedRepository
 import kotlinx.coroutines.CoroutineScope
@@ -30,18 +31,15 @@ class GetCatDetailUseCase @Inject constructor(
             val cateDetail = CatDetailInfo(localData.toCatBreedItem(), images)
             emit(NetworkState.Success(cateDetail))
         } else {
-            val detailResponse = repository.getCatBreedDetail(param)
-            val detailInfo = if(detailResponse is NetworkState.Success) {
-                detailResponse.data
-            } else {
-                null
-            }
-            if (detailInfo != null) {
-                val catDetailInfo = CatDetailInfo(detailInfo.toCatBreedItem(), images)
-                emit(NetworkState.Success(catDetailInfo))
-            } else {
-                emit(NetworkState.Error(NoDataAvailableException()))
-            }
+            repository.getCatBreedDetail(param).getNetworkResult(
+                onSuccess = { response ->
+                    val catDetailInfo = CatDetailInfo(response?.toCatBreedItem(), images)
+                    emit(NetworkState.Success(catDetailInfo))
+                },
+                onError = {
+                    emit(NetworkState.Error(it))
+                }
+            )
         }
     }
 }

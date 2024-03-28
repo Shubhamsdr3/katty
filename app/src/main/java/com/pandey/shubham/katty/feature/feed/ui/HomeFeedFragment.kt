@@ -172,6 +172,7 @@ class HomeFeedFragment : BaseFragment<FragmentHomeFeedBinding, HomeFeedFragmentC
     fun updateFavorite() {
         if (currentDetailId.isNullOrBlank()) return
         viewModel.getFavoriteBreed(currentDetailId!!)
+        hideError()
     }
 
     private fun openDetailFragment(position: Int, feedItem: CatBreedItemInfo) {
