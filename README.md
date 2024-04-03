@@ -19,6 +19,7 @@
 9. Retrofit - Used for REST api communication.
 10. Glide - for image loading/caching
 11. Room - Used to create room db and store the data.
+12. JUnit4/Mockk for unit testing.
 
 **Screenshots**
 
