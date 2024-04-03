@@ -1,11 +1,6 @@
-**Project structure:**
+This App is created for learning how to write code with sepration of cocerns, modular, testable and using MVVM clearn architecture.
 
-  ![project structure drawio](https://github.com/Shubhamsdr3/katty/assets/17290386/90eb5e64-dbfd-4fa5-bf40-0ba421aff88c)
-
-
-**App architecure:**
-
-![katty drawio](https://github.com/Shubhamsdr3/katty/assets/17290386/b047f334-203c-4ef6-a954-4df04434a851)
+API used: https://thecatapi.com/
 
 **Techstack: libraries**
 1. MVVM clean architecture.
@@ -20,6 +15,16 @@
 10. Glide - for image loading/caching
 11. Room - Used to create room db and store the data.
 12. JUnit4/Mockk for unit testing.
+
+
+**Project structure:**
+
+  ![project structure drawio](https://github.com/Shubhamsdr3/katty/assets/17290386/90eb5e64-dbfd-4fa5-bf40-0ba421aff88c)
+
+
+**App architecure:**
+
+![katty drawio](https://github.com/Shubhamsdr3/katty/assets/17290386/b047f334-203c-4ef6-a954-4df04434a851)
 
 **Screenshots**
 
